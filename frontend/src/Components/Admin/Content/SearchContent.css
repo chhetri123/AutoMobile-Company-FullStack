@@ -1,0 +1,15 @@
+.form-control::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: black;
+    opacity: 1;
+    /* Firefox */
+}
+
+.form-control {
+    border: none;
+    border-bottom: 2px solid #ccc;
+    width: 80%;
+    font-size: 15px;
+    font-style: bold;
+    margin: 0 auto;
+}
