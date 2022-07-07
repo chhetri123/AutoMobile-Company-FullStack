@@ -40,11 +40,11 @@ drop table car;
 CREATE TABLE `model` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(20) not null,
-  `year` datetime ,
+  `year` year ,
   `body_style` varchar(20) not null,
   `brand_id` INT
 );
-
+-- alter table model modify column year year;
 show columns from model;
 
 CREATE TABLE `brand` (
@@ -62,7 +62,7 @@ show columns from dealer;
 drop table dealer;
 CREATE TABLE `option` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `description` varchar(50),
+  `description` varchar(150),
   `engine_id` int,
   `specs_id` int,
   `model_id` varchar(20)
@@ -70,38 +70,39 @@ CREATE TABLE `option` (
 
 CREATE TABLE `engine` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `modification` varchar(30),
-  `power` varchar(20),
-  `torque` varchar(20),
-  `speed` varchar(20),
+  `modification` varchar(50),
+  `power` varchar(50),
+  `torque` varchar(50),
+  `speed` varchar(50),
   `fuel_type` varchar(20)
 );
-
+drop table engine;
+alter table options modify column description varchar(150);
 CREATE TABLE `specs` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `front_sus` varchar(30),
-  `rear_sus` varchar(30),
-  `front_brake` varchar(30),
-  `rear_brake` varchar(30)
+  `front_sus` varchar(50),
+  `rear_sus` varchar(50),
+  `front_brake` varchar(50),
+  `rear_brake` varchar(50)
 );
+drop table specs;
+ALTER TABLE `customer` ADD FOREIGN KEY (`dealer_id`) REFERENCES `dealer` (`id`) on delete set null;
 
-ALTER TABLE `customer` ADD FOREIGN KEY (`dealer_id`) REFERENCES `dealer` (`id`);
+ALTER TABLE `purchase` ADD FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) on delete cascade;
 
-ALTER TABLE `purchase` ADD FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`);
+ALTER TABLE `purchase` ADD FOREIGN KEY (`car_id`) REFERENCES `car` (`id`) on delete cascade;
 
-ALTER TABLE `purchase` ADD FOREIGN KEY (`car_id`) REFERENCES `car` (`id`);
+ALTER TABLE `car` ADD FOREIGN KEY (`model_id`) REFERENCES `model` (`id`) on delete cascade;
 
-ALTER TABLE `car` ADD FOREIGN KEY (`model_id`) REFERENCES `model` (`id`);
+ALTER TABLE `option` ADD FOREIGN KEY (`id`) REFERENCES `car` (`option_id`) on delete cascade;
 
-ALTER TABLE `option` ADD FOREIGN KEY (`id`) REFERENCES `car` (`option_id`);
+ALTER TABLE `model` ADD FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`) on delete cascade;
 
-ALTER TABLE `brand` ADD FOREIGN KEY (`id`) REFERENCES `model` (`brand_id`);
+ALTER TABLE `options` ADD FOREIGN KEY (`engine_id`) REFERENCES `engine` (`id`) on delete cascade;
 
-ALTER TABLE `option` ADD FOREIGN KEY (`engine_id`) REFERENCES `engine` (`id`);
+ALTER TABLE `options` ADD FOREIGN KEY (`specs_id`) REFERENCES `specs` (`id`) on delete cascade;
 
-ALTER TABLE `option` ADD FOREIGN KEY (`specs_id`) REFERENCES `specs` (`id`);
-
-ALTER TABLE `option` ADD FOREIGN KEY (`model_id`) REFERENCES `model` (`id`);
+ALTER TABLE `options` ADD FOREIGN KEY (`model_id`) REFERENCES `model` (`id`) on delete cascade;
 
 -- DATA INSERT for Testing
 
@@ -146,17 +147,45 @@ select * from brand;
 
 -- Model
 
+insert into model(name,year,body_style,brand_id) values("A1",2014,"Hatchback",1),
+("X7",2020,"SUV",2);
+select * from model;
 
 
 
+
+-- engine
+
+insert into engine (modification,power,torque,speed,fuel_type) values ("1.6 TDI (116 Hp) S tronic","116 Hp @ 1500-3250 rpm","250 Nm @ 1500-3000 rpm","200","Diesel Commonrail"),("40d (340 Hp) xDrive MHEV Steptronic","340 Hp @ 4400 rpm","700 Nm @ 1750-2250 rpm.","245","Diesel");
+
+
+select * from engine;
+
+-- specs
+
+insert into specs (front_sus,rear_sus,front_brake,rear_brake) values
+("Independent, Spring McPherson, with stabilizer","Semi-independent, coil spring","Ventilated discs","Disc"),
+("Double wishbone","Multi-link independent","Ventilated discs","Disc");
+
+select * from specs;
+-- option
+insert into options(model_id,description,engine_id ,specs_id) values
+(1,"Low aggressive front three",1,1),
+(2,"The Internal combustion engine (ICE) and the electric motor permanently drive the four wheels of the car with the ability to work only in mixed mode",2,2);
+
+select * from specs;
 
 -- Some Queries
+SET foreign_key_checks = 0;
+SET foreign_key_checks = 1;
+
 UPDATE customer SET dealer_id = 1 WHERE id=2;
 UPDATE customer SET dealer_id = 2 WHERE id=1;
 
 select c.name ,b.name,VIN from customer as c join purchase as p on c.id=p.customer_id join car as b on b.id=p.car_id;
 
-
+delete from customer where id=1;
+delete from car where id=1;
 
 
 
