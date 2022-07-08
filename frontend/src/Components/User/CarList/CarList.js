@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CarCard from "./CarCard";
 import LeftCard from "./LeftCard";
 import "./CarList.css";
 const CarList = () => {
+  const [carList, setCarList] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:3000/api/v1/car")
+      .then((res) => res.json())
+      .then((data) => {
+        setCarList(data);
+      });
+  }, [carList]);
   return (
     <div className="container">
       <h1 className="text-center text-info overflow-hidden p-3 mb-4">
@@ -15,11 +23,9 @@ const CarList = () => {
         </div>
         <div className="col-md-10">
           <div className="row right_list">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8].map(
-              (item) => (
-                <CarCard />
-              )
-            )}
+            {carList.map((item) => (
+              <CarCard data={item} />
+            ))}
           </div>
         </div>
       </div>

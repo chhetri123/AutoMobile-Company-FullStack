@@ -1,0 +1,9 @@
+
+# Customer Routes
+
+GET http://localhost:3000/api/v1/customer
+
+
+# Car Routes
+
+GET http://localhost:3000/api/v1/cars

@@ -1,10 +1,19 @@
+import { Route, Routes } from "react-router-dom";
+
 import DashBoard from "./Components/Admin";
-// import CarList from "./Components/User/CarList/CarList";
 
 import "./App.css";
+import CarList from "./Components/User/CarList/CarList";
 // import CarDetails from "./Components/User/CarDetails/CarDetails";
-function App() {
-  return <DashBoard />;
-}
+const App = () => {
+  return (
+    <div className="App">
+      <Routes>
+        <Route path="/" exact element={<CarList />} />
+        <Route path="/admin" element={<DashBoard />} />
+      </Routes>
+    </div>
+  );
+};
 
 export default App;

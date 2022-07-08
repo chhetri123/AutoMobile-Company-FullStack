@@ -5,8 +5,9 @@ const path = require("path");
 const bodyParser = require("body-parser");
 let cors = require("cors");
 
-const collageRoutes = require("./routes/collageRoutes");
+// const carRoutes = require("./routes/carRoutes");
 const customerRoutes = require("./routes/customerRoutes");
+const carRoutes = require("./routes/carRoutes");
 
 const port = 3000;
 app.use(cors());
@@ -15,8 +16,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(collageRoutes);
-app.use(customerRoutes);
+app.use("/api/v1", customerRoutes);
+app.use("/api/v1", carRoutes);
 mysql.getConnection((err, connection) => {
   if (err) {
     throw err;
