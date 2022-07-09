@@ -8,22 +8,20 @@ class MySql {
     this.getDbServiceInstance;
   }
 
-  showTable = async (name) => {
+  showTable = async () => {
     try {
       const query = `SHOW TABLES`;
-      const response = await promise(query, "");
-      return response;
+      return await promise(query, "");
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   };
   async getAllData(name) {
     try {
       const query = `SELECT * FROM ${name}`;
-      const response = await promise(query, "");
-      return response;
+      return await promise(query, "");
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -31,31 +29,27 @@ class MySql {
     try {
       const query = `INSERT INTO ${name} SET ?`;
 
-      const response = promise(query, data);
-      return response;
+      return await promise(query, data);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
   async deleteById(name, data) {
     try {
       const query = `DELETE FROM ${name} WHERE ${Object.keys(data)[0]}= ?`;
-      const response = promise(query, Object.values(data)[0]);
-      return response;
+      return await promise(query, Object.values(data)[0]);
     } catch (error) {
-      console.log(error);
-      return false;
+      throw new Error(error);
     }
   }
   async find(name, data) {
     try {
       const field = Object.keys(data)[0];
       const query = `SELECT * FROM ${name} WHERE ${field}= ?;`;
-      const response = promise(query, Object.values(data)[0]);
-      return response;
+      return await promise(query, Object.values(data)[0]);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -65,15 +59,27 @@ class MySql {
       const query = `UPDATE ${name} SET ${field} = ? WHERE ${
         Object.keys(data)[0]
       }= ?`;
-      const response = promise(query, [
+      return await promise(query, [
         Object.values(data)[1],
         Object.values(data)[0],
       ]);
-      return await response;
     } catch (error) {
-      return false;
+      throw new Error(error);
+    }
+  }
+  async queryFind(name, data) {
+    try {
+      const query = `SELECT * FROM ${name} WHERE ${
+        Object.keys(data)[0]
+      }= ? AND ${Object.keys(data)[1]}= ?`;
+      return await promise(query, [
+        Object.values(data)[0],
+        Object.values(data)[1],
+      ]);
+    } catch (error) {
+      throw new Error(error);
     }
   }
 }
 
-module.exports = new MySql();
+module.exports = MySql;

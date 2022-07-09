@@ -52,7 +52,7 @@ CREATE TABLE `model` (
   `brand_id` INT
 );
 
--- alter table model modify column year year;
+-- alter table model add  url varchar(200) not null;
 show columns from model;
 drop table model;
 
@@ -164,37 +164,46 @@ insert  into dealer(name,address,phone) values
 
 select * from dealer;
 
--- Car
-insert into car(VIN,name,url) values
-("WAUAF98E17A024459","Audi A1 SportBack","https://www.auto-data.net/images/f24/file8100663.jpg"),
-("WBAWB73509P044425","BMW X7 Steptronic","https://www.auto-data.net/images/f13/BMW-X7-G07.jpg");
-select * from car;
-
-
 -- brand
-insert into brand(`name`) values ( "Audi"),
-("BMW"),
-("Honda"),
-("Lamborghini"),
-("Suzuki"),
-("Toyota"),
-("Tesla");
+insert into brand(`name`,`url`) values 
+( "Audi","https://www.izmostock.com/wp-content/uploads/2015/12/audi.gif"),
+("BMW","https://www.izmostock.com/wp-content/uploads/2015/12/bmw.png"),
+("Tesla","https://www.izmostock.com/wp-content/uploads/2015/12/tesla.jpg"),
+("Lamborghini","https://www.izmostock.com/wp-content/uploads/2015/12/lamborghini.jpg"),
+("Honda","https://www.izmostock.com/wp-content/uploads/2015/12/honda.gif"),
+("Suzuki","https://www.izmostock.com/wp-content/uploads/2015/12/suzuki.gif"),
+("Toyota","https://www.izmostock.com/wp-content/uploads/2015/12/toyota.gif");
 
 select * from brand;
 
 -- Model
 
-insert into model(name,year,body_style,brand_id) values("A1",2014,"Hatchback",1),
-("X7",2020,"SUV",2);
+insert into model(name,year,body_style,url,brand_id) values
+("A1",2014,"Hatchback","https://www.auto-data.net/images/f97/Audi-A1-allstreet-GB_1.jpg",1),
+("A2",2022,"Crossover","https://www.auto-data.net/images/f35/Audi-A2-Typ-8Z_1.jpg",1),
+("PB18",2014,"Hatchback","https://www.auto-data.net/images/f29/Audi-PB18-e-tron.jpg",1),
+("X7",2020,"SUV","https://www.auto-data.net/images/f13/BMW-X7-G07.jpg",2);
+truncate table model;
 select * from model;
 
-
-
+-- Car
+insert into car(VIN,name,url,model_id,option_id,inventory_id) values
+("WAUAF98E17A024459","Audi A1 SportBack","audi-a1-sportback-2018.png",1,1,1),
+("WAUAF98E17A034459","Audi PB18 concept","Audi-PB18-e-tron.png",3,3,1),
+("WAUAF98E17A054459","Audi A1 allstreet","Audi-A1-allstreet-GB_1.png",1,4,1),
+("WBAWB73509P044425","BMW X7 Steptronic","BMW-X7-G07-facelift-2022_3.jpg",4,2,2),
+("WAUAF98E17A064459","Audi A1 citycarver","Audi-A1-Citycarver.png",1,1,1),
+("WAUAF98E17A074459","2000 A2 (Typ 8Z)","Audi-A2-Typ-8Z_1.png",2,null,1);
+truncate table car;
+select * from car;
 
 -- engine
 
-insert into engine (modification,power,torque,speed,fuel_type) values ("1.6 TDI (116 Hp) S tronic","116 Hp @ 1500-3250 rpm","250 Nm @ 1500-3000 rpm","200","Diesel Commonrail"),("40d (340 Hp) xDrive MHEV Steptronic","340 Hp @ 4400 rpm","700 Nm @ 1750-2250 rpm.","245","Diesel");
-
+insert into engine (power,torque,speed,fuel_type) values
+ ("116","250","200","Diesel Commonrail"),
+ ("340","700","245","Diesel"),
+ ("238","830","280","Electric Power"),
+("150","250","215","Petrol (Gasoline)");
 
 select * from engine;
 
@@ -202,15 +211,27 @@ select * from engine;
 
 insert into specs (front_sus,rear_sus,front_brake,rear_brake) values
 ("Independent, Spring McPherson, with stabilizer","Semi-independent, coil spring","Ventilated discs","Disc"),
-("Double wishbone","Multi-link independent","Ventilated discs","Disc");
-
+("Double wishbone","Multi-link independent","Ventilated discs","Disc"),
+("Double wishbone","Double wishbone","Ventilated discs","Ventilated discs"),
+("Independent, Spring McPherson, with stabilizer","Torsion","Ventilated discs","Disc");
 select * from specs;
 -- option
-insert into options(model_id,description,engine_id ,specs_id) values
-(1,"Low aggressive front three",1,1),
-(2,"The Internal combustion engine (ICE) and the electric motor permanently drive the four wheels of the car with the ability to work only in mixed mode",2,2);
+insert into options(model_id,color,engine_id ,specs_id) values
+(1,"Blue",1,1),
+(4,"White",2,2),
+(3,"Sliver",3,3),
+(1,"Black",4,4);
+
 
 select * from specs;
+
+
+
+-- inventory
+insert into inventory (name,address,dealer_id) values
+ ('Audi ShowRoom','Pokhara NayaBazar',1),
+('BMW ShowRoom','Kathmandu Kritipur',2);
+
 
 -- Some Queries
 SET foreign_key_checks = 0;
@@ -223,6 +244,19 @@ select c.name ,b.name,VIN from customer as c join purchase as p on c.id=p.custom
 
 delete from customer where id=1;
 delete from car where id=1;
+select * from model;
+select * from car ;
+select * from model where model.brand_id=1;
+select * from car where model_id=1;
+
+select * from car join model on model.id=car.model_id join options on options.id=car.option_id ;
+select * from inventory;
+select * from (options join engine on engine.id=options.engine_id) join specs on specs.id= options.specs_id where options.id=2;
+select I.name,address,I.dealer_id from car join inventory as I on car.inventory_id=I.id where car.id=4;
+select * from dealer where id=1;
+select * from dealer;
+
+
 
 
 
