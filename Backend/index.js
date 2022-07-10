@@ -22,6 +22,7 @@ app.use("/api/v1", brandRoutes);
 
 app.use(brandRoutes);
 app.use("*", (req, res) => {
+  console.log(req.query);
   res.send("<h1>404</h1> <p>Page not found</p>");
 });
 mysql.getConnection((err, connection) => {

@@ -25,15 +25,15 @@ class MySql {
     }
   }
 
-  async insertData(name, data) {
-    try {
-      const query = `INSERT INTO ${name} SET ?`;
+  // async insertData(name, data) {
+  //   try {
+  //     const query = `INSERT INTO ${name} SET ?`;
 
-      return await promise(query, data);
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
+  //     return await promise(query, data);
+  //   } catch (error) {
+  //     throw new Error(error);
+  //   }
+  // }
 
   async deleteById(name, data) {
     try {
