@@ -43,7 +43,7 @@ exports.getCarInfo = async (req, res) => {
     car[0].inventory = inventory;
     delete car[0].dealer_id;
     car[0].dealers = dealers;
-    console.log(carInfo);
+
     res.status(200).json(car);
   } catch (err) {
     res.status(500).json(err);
