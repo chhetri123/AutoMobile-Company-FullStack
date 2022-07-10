@@ -1,0 +1,9 @@
+.form-control {
+    border: none;
+    border: 2px solid #ccc;
+    width: 80%;
+    font-size: 15px;
+    font-style: bold;
+    line-height: 0px;
+    margin: 0 auto;
+}

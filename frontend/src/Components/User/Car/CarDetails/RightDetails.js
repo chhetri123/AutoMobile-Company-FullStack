@@ -1,15 +1,5 @@
 import React from "react";
 import TableRow from "../../../Admin/Content/TableRow";
-
-const object = [
-  { key: "Jacob", value: "Thornton" },
-  { key: "@fat", value: "@fat" },
-  { key: "Alberto", value: "Alberto" },
-];
-
-// [{
-
-// },{},{}]
 const title = [
   "General Information",
   "Performance Specs",
@@ -32,7 +22,7 @@ const RightDetails = (props) => {
       });
       array.push(array1);
     });
-  // console.log(array);
+
   return (
     <>
       {props.data.options &&
@@ -42,7 +32,7 @@ const RightDetails = (props) => {
             <table className="table table-sm table-striped">
               <tbody>
                 {items.map((el) => (
-                  <TableRow fromUser={true} data={el} />
+                  <TableRow fromUser={true} data={el} key={Math.random()} />
                 ))}
               </tbody>
             </table>

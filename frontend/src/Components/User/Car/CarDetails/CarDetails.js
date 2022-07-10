@@ -19,7 +19,7 @@ const CarDetails = () => {
         setCarDetails(data[0]);
       })
       .catch((err) => console.log(err));
-  }, [id]);
+  }, [id2, id1, id]);
 
   return (
     <div className="container" style={{ width: "75%", color: "orangered" }}>
@@ -37,7 +37,7 @@ const CarDetails = () => {
           </div>
         </div>
       </div>
-      <Model />
+      <Model data={carDetails.dealers} />
     </div>
   );
 };
