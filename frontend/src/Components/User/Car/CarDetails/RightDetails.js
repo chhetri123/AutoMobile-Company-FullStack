@@ -29,6 +29,7 @@ const RightDetails = (props) => {
         array.map((items, ind) => (
           <div className="media-body" key={Math.random()}>
             <h5 className="mt-0 text-dark">{title[ind]}</h5>
+            <hr />
             <table className="table table-sm table-striped">
               <tbody>
                 {items.map((el) => (

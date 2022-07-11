@@ -15,11 +15,18 @@ const LeftDetails = (props) => {
                   : "default.jpg"
               }`}
               alt={props.data.name}
-              style={{ width: "100%", height: "auto" }}
+              style={{
+                width: "100%",
+                height: "auto",
+                boxShadow: "black 0px 0px 6px 0px",
+              }}
             />
           </div>
+          <hr />
           <div>
-            <h3 className="mt-1 text-center">{props.data.name}</h3>
+            <h3 className="mt-1 text-center" style={{ fontSize: "1.2em" }}>
+              {props.data.name}
+            </h3>
             <hr />
             <h4>Dealer</h4>
             <table className="text-center table table-sm table-striped">

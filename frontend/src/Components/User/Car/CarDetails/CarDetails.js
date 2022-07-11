@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import Header from "../../Header";
+import Header from "../../../Template/Header";
 import LeftDetails from "./LeftDetails";
 import RightDetails from "./RightDetails";
 import Model from "./Model";
@@ -23,7 +23,6 @@ const CarDetails = () => {
 
   return (
     <div className="container" style={{ width: "75%", color: "orangered" }}>
-      <Header headerName="Auto Mobile Company" />
       <div className="container-sm">
         <hr />
         <Header headerName="Car Info" />

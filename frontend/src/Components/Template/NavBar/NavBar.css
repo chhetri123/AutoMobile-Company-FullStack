@@ -1,0 +1,32 @@
+nav {
+    width: 76%;
+    box-shadow: black 0px 0px 6px 0px;
+    margin: 0 auto;
+    border-radius: 20px;
+
+}
+
+nav img {
+    background-color: aquamarine;
+    border-radius: 50%;
+}
+
+nav button {
+    background-color: rgba(127, 255, 212, 0.363);
+    border-radius: 50%;
+    border: 5px solid aquamarine;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+nav a {
+    color: black;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+nav .navbar-nav li {
+    margin-left: 2em;
+
+}

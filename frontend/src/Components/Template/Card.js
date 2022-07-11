@@ -31,7 +31,11 @@ const Card = (props) => {
                 <h3>{props.data.name}</h3>
                 <h2 className="price">RS 500</h2>
                 <Link
-                  to={`${pathname}/${props.data.id}/details`}
+                  to={
+                    props.isCarFromModel
+                      ? `/brand/5${pathname}/${props.data.id}/details`
+                      : `${pathname}/${props.data.id}/details`
+                  }
                   className="buy"
                 >
                   View More Details
