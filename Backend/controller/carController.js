@@ -12,8 +12,8 @@ exports.getCar = async (req, res) => {
 exports.getCarWithModelId = async (req, res) => {
   try {
     const car = await CarModel.find("car", { model_id: req.params.id });
-    console.log(req.params);
-    res.status(200).json(car);
+    const [{ name }] = await CarModel.find("model", { id: req.params.id });
+    res.status(200).json({ model: name, car });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -25,8 +25,9 @@ exports.getCarInfo = async (req, res) => {
       id: req.params.id,
       model_id: req.params.model_id,
     });
+
     if (car.length <= 0) {
-      return res.status(404).json({ msg: "Car Not Found" });
+      return res.status(404).json({ status: 404, msg: "Car Not Found" });
     }
     const { option_id } = car[0];
     const carInfo = await CarModel.getCarInfo(option_id, req.params.model_id);

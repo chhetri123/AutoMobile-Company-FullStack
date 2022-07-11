@@ -45,7 +45,6 @@ exports.postCustomers = async (req, res) => {
       msg: "Data Inserted successfully",
     });
   } catch (err) {
-    console.log();
     res.status(500).json({
       status: 500,
       msg: err.message.split(":")[2],

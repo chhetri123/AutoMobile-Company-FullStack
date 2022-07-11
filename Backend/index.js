@@ -9,6 +9,9 @@ let cors = require("cors");
 const customerRoutes = require("./routes/customerRoutes");
 const carRoutes = require("./routes/carRoutes");
 const brandRoutes = require("./routes/brandRoutes");
+const modelRoutes = require("./routes/modelRoutes");
+
+//
 const port = 3000;
 app.use(cors());
 app.use(express.json());
@@ -19,6 +22,7 @@ app.use(bodyParser.json());
 app.use("/api/v1", customerRoutes);
 app.use("/api/v1", carRoutes);
 app.use("/api/v1", brandRoutes);
+app.use("/api/v1", modelRoutes);
 
 app.use(brandRoutes);
 app.use("*", (req, res) => {
