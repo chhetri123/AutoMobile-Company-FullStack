@@ -1,15 +1,27 @@
-.form-control::placeholder {
+.admin_search::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: black;
     opacity: 1;
     /* Firefox */
 }
 
-.form-control {
-    border: none;
-    border-bottom: 2px solid #ccc;
-    width: 80%;
-    font-size: 15px;
-    font-style: bold;
+.admin_search {
+    padding: 3%;
+}
+
+.admin_search input {
+
+    width: 90%;
     margin: 0 auto;
+    padding: 16px 10px;
+    line-height: 25px;
+    font-size: 19px;
+    font-weight: 400;
+    color: black;
+    border-radius: 5px;
+    border: 1px solid rgba(100, 94, 9, 0.904);
+}
+
+input:focus {
+    border: 1px solid rgba(100, 94, 9, 0.904) !important;
 }

@@ -1,15 +1,13 @@
-import SideBar from "./Nabar/SideBar";
+import NavBar from "./Nabar/NavBar";
 import Header from "./Header/Header";
 import Content from "./Content/Content";
 
 function DashBoard() {
   return (
-    <div className="wrapper d-flex align-items-stretch">
-      <SideBar />
-      <div>
-        <Header />
-        <Content />
-      </div>
+    <div className="wrapper align-items-stretch">
+      <NavBar />
+      <Header />
+      <Content />
     </div>
   );
 }

@@ -2,11 +2,11 @@ import React from "react";
 import "./SearchContent.css";
 const SearchContent = () => {
   return (
-    <div className="form-outline text-center mb-4">
+    <div className="text-center mb-4 admin_search">
       <input
         type="search"
         id="query"
-        className="form-control p-3"
+        className="queryInput"
         placeholder="Type Query Here"
       />
     </div>

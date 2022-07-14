@@ -5,26 +5,22 @@ import TableContent from "./TableContent";
 const Content = (props) => {
   const [display, setDisplay] = useState("block");
   useEffect(() => {
-    setDisplay(
-      window.location.pathname === "/" ||
-        window.location.pathname === "/index.html"
-        ? "block"
-        : "none"
-    );
-
+    setDisplay(window.location.pathname === "/admin" ? "block" : "none");
     document.querySelector(".searchBar").style.display = display;
   }, [display]);
   return (
-    <div className="row" style={{ marginTop: "-60px" }}>
-      <div className="col-md-12">
-        <h3 className="text-center">{props.tableName} Table</h3>
-      </div>
-
-      <div className="col-md-12 searchBar">
-        <SearchContent />
-      </div>
-      <div className="col-md-12">
-        <TableContent />
+    <div className="container">
+      <hr />
+      <div className="row">
+        <div className="col-md-12">
+          <h3 className="text-center">{props.tableName} Table</h3>
+        </div>
+        <div className="col-md-12 searchBar">
+          <SearchContent />
+        </div>
+        <div className="col-md-12">
+          <TableContent />
+        </div>
       </div>
     </div>
   );

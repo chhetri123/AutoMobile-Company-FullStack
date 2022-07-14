@@ -1,0 +1,7 @@
+.admin_table_content {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    border: 2px solid rgba(90, 90, 168, 0.651)violet;
+
+}

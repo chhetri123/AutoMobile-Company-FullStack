@@ -1,5 +1,6 @@
 import React from "react";
 import TableRow from "./TableRow";
+import "./TableContent.css";
 const data = [
   {
     course_id: "BEI123",
@@ -64,7 +65,7 @@ const data = [
 ];
 const TableContent = () => {
   return (
-    <table className="table">
+    <table className="table admin_table">
       <thead>
         <tr className="table-active">
           {["SN ", ...Object.keys(data[0])].map((el) => (
