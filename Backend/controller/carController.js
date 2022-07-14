@@ -1,4 +1,6 @@
 const CarModel = require("../model/CarModel");
+const catchAsync = require("../Utills/catchAsync");
+
 exports.getAllCars = async (req, res) => {
   const cars = await CarModel.getAllData("car");
   res.status(200).json(cars);
@@ -50,3 +52,37 @@ exports.getCarInfo = async (req, res) => {
     res.status(500).json(err);
   }
 };
+exports.postCar = catchAsync(async (req, res) => {
+  const { VIN, name, url, modelId } = req.body.car;
+  const { power, torque, fuelType, speed } = req.body.engine;
+  const { frontSus, rearSus, frontBrake, rearBrake } = req.body.specs;
+  const { color } = req.body.option;
+
+  const engine = await CarModel.insert("engine", {
+    power,
+    torque,
+    fuel_type: fuelType,
+    speed,
+  });
+
+  const specs = await CarModel.insert("specs", {
+    font_sus: frontSus,
+    rear_sus: rearSus,
+    front_brake: frontBrake,
+    rear_brake: rearBrake,
+  });
+  const option = await CarModel.insert("options", {
+    color,
+    engine_id: engine.insertId,
+    specs_id: specs.insertId,
+    model_id: modelId,
+  });
+  const car = await CarModel.insert("car", {
+    VIN,
+    name,
+    url,
+    model_id: modelId,
+    option_id: option.insertId,
+  });
+  res.status(200).json({ status: 200, car });
+});

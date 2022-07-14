@@ -24,16 +24,15 @@ class MySql {
       throw new Error(error);
     }
   }
-
-  // async insertData(name, data) {
-  //   try {
-  //     const query = `INSERT INTO ${name} SET ?`;
-
-  //     return await promise(query, data);
-  //   } catch (error) {
-  //     throw new Error(error);
-  //   }
-  // }
+  async insert(name, data) {
+    console.log(data)
+    try {
+      const query = `INSERT INTO ${name} SET ?`;
+      return await promise(query, data);
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 
   async deleteById(name, data) {
     try {

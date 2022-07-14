@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const carController = require("../controller/carController");
-router.get("/car", carController.getAllCars);
+router.route("/car").get(carController.getAllCars).post(carController.postCar);
 router.get("/car/:id", carController.getCar);
 
 module.exports = router;
