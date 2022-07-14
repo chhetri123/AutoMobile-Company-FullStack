@@ -12,12 +12,14 @@ nav img {
 }
 
 nav button {
-    background-color: rgba(127, 255, 212, 0.363);
+    background-color: rgba(127, 255, 212, 0.781);
     border-radius: 50%;
     border: 5px solid aquamarine;
-    padding: 10px;
+    padding: 15px 20px;
     margin: 10px;
     cursor: pointer;
+    color: Black;
+
 }
 
 nav a {

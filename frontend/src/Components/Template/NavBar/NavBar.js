@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./NavBar.css";
 
 const NavBar = (props) => {
@@ -20,26 +20,20 @@ const NavBar = (props) => {
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link active" to="/">
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/brand">
-                  Brand
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/model">
-                  Model
-                </Link>
-              </li>
+              {props.navItems.items.map((item) => (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to={item.link}>
+                    {item.title}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div className="d-flex align-items-center">
-            <button className="btn btn-default">User</button>
+            <button className="btn btn-default" style={{ fontWeight: "600" }}>
+              {props.navItems.role}
+            </button>
           </div>
         </div>
       </nav>
