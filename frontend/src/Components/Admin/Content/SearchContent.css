@@ -25,3 +25,7 @@
 input:focus {
     border: 1px solid rgba(100, 94, 9, 0.904) !important;
 }
+
+.searchBar {
+    display: none !important;
+}

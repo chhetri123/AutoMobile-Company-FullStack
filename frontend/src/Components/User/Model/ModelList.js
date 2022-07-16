@@ -16,7 +16,7 @@ const ModelList = (props) => {
         .then((res) => res.json())
         .then((data) => {
           setBrand(data.brand);
-          setModels(data.models);
+          setModels(data?.models || data.data);
         });
     }
   }, [id, props.isModel]);

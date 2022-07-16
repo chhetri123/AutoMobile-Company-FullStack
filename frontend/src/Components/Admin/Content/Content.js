@@ -3,23 +3,54 @@ import SearchContent from "./SearchContent";
 import TableContent from "./TableContent";
 
 const Content = (props) => {
-  const [display, setDisplay] = useState("block");
+  const [queryData, setQueryData] = useState([]);
+  const [errMsg, setErrMsg] = useState("Enter the Query For data");
+
+  function onSubmitQuery(query) {
+    fetch(`http://localhost:3000/api/v1/getquery?query=${query}`)
+      .then((data) => data.json())
+      .then((res) => {
+        if (res.status === 200) {
+          setQueryData(res.stats);
+        } else {
+          setQueryData([]);
+          setErrMsg(res.msg.split(":")[1]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   useEffect(() => {
-    setDisplay(window.location.pathname === "/admin" ? "block" : "none");
-    document.querySelector(".searchBar").style.display = display;
-  }, [display]);
+    if (props.tableName) {
+      fetch(`http://localhost:3000/api/v1/${props.tableName}`)
+        .then((data) => data.json())
+        .then((res) => {
+          setQueryData(res.data);
+        });
+    }
+  }, [props.tableName]);
+
   return (
     <div className="container">
       <hr />
       <div className="row">
         <div className="col-md-12">
-          <h3 className="text-center">{props.tableName} Table</h3>
+          <h3 className="text-center text-capitalize">
+            {props.tableName} Table
+          </h3>
         </div>
-        <div className="col-md-12 searchBar">
-          <SearchContent />
+
+        <div
+          className={`col-md-12 ${
+            props.tableName === undefined ? "" : "searchBar"
+          }`}
+        >
+          <SearchContent onSubmitQuery={onSubmitQuery} />
         </div>
-        <div className="col-md-12">
-          <TableContent />
+        <div className="col-md-12 tableContainer">
+          <TableContent errMsg={errMsg} queryData={queryData} />
+          <hr />
         </div>
       </div>
     </div>

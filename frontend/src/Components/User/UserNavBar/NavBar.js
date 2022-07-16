@@ -3,6 +3,7 @@ import NavBar from "../../Template/NavBar/NavBar";
 
 const navItems = {
   role: "User",
+  link: "/admin",
   items: [
     { title: "Home", link: "/" },
     { title: "Brand", link: "/brand" },
@@ -13,7 +14,7 @@ const navItems = {
 const UserNavBar = () => {
   return (
     <>
-      <NavBar navItems={navItems} />
+      <NavBar navItems={navItems} isStyle={false} />
     </>
   );
 };

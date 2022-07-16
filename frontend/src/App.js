@@ -6,8 +6,8 @@ const App = () => {
   return (
     <div className="App">
       <Routes>
-        <Route path="/admin" exact element={<AdminComponent />} />
-        <Route path="/" exact element={<UserComponent />} />
+        <Route path="/admin/*" exact element={<AdminComponent />} />
+        <Route path="*" exact element={<UserComponent />} />
       </Routes>
     </div>
   );

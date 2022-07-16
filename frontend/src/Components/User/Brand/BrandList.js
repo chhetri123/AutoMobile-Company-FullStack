@@ -7,7 +7,7 @@ const BrandList = () => {
     fetch("http://localhost:3000/api/v1/brand")
       .then((res) => res.json())
       .then((data) => {
-        setBrands(data);
+        setBrands(data.data);
       });
   }, [brands]);
   return (

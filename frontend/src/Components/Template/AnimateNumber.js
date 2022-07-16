@@ -5,7 +5,7 @@ const Animate = (props) => {
   const prop = useSpring({ val: props.number, from: { val: 0 } });
   return (
     <animated.div className="number">
-      {prop.val.interpolate((val) => Math.floor(val))}
+      {prop.val.to((val) => Math.floor(val))}
     </animated.div>
   );
 };

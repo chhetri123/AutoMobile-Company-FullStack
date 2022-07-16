@@ -1,11 +1,14 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import "./NavBar.css";
 
 const NavBar = (props) => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light">
+      <nav
+        className="navbar navbar-expand-lg navbar-light"
+        style={props.isStyle ? { width: "85%" } : { width: "76%" }}
+      >
         <div className="container-fluid">
           <a className="navbar-brand mt-2 mt-lg-0" href="/">
             <img
@@ -21,7 +24,7 @@ const NavBar = (props) => {
           >
             <ul className="navbar-nav mb-2 mb-lg-0">
               {props.navItems.items.map((item) => (
-                <li className="nav-item">
+                <li className="nav-item" key={Math.random()}>
                   <NavLink className="nav-link" to={item.link}>
                     {item.title}
                   </NavLink>
@@ -31,9 +34,11 @@ const NavBar = (props) => {
           </div>
 
           <div className="d-flex align-items-center">
-            <button className="btn btn-default" style={{ fontWeight: "600" }}>
-              {props.navItems.role}
-            </button>
+            <a href={props.navItems.link}>
+              <button className="btn btn-default" style={{ fontWeight: "600" }}>
+                {props.navItems.role}
+              </button>
+            </a>
           </div>
         </div>
       </nav>
