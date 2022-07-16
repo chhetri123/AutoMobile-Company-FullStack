@@ -4,7 +4,7 @@ const Db = require("../Utills/DbService");
 const MySql = new Db();
 exports.getAllBrands = async (req, res) => {
   const brands = await MySql.getAllData("brand");
-  res.status(200).json(brands);
+  res.status(200).json({data: brands});
 };
 exports.postBrand = catchAsync(async (req, res) => {
   const { name, url } = req.body;

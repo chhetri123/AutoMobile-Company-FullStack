@@ -4,7 +4,7 @@ exports.getAllCustomers = async (req, res) => {
   const customers = await CustomerModel.getAllData("customer");
   res.status(200).json({
     results: customers.length,
-    customers,
+    data: customers,
   });
 };
 

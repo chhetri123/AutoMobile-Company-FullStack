@@ -9,7 +9,7 @@ exports.getModels = async (req, res) => {
 exports.getAllModels = async (req, res) => {
   try {
     const models = await MySql.getAllData("model");
-    res.status(200).json({ models });
+    res.status(200).json({ data: models });
   } catch (err) {
     res.status(500).json({ msg: err.msg });
   }

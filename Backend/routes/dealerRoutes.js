@@ -1,9 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const carController = require("../controller/dealerController");
+const dealerController = require("../controller/dealerController");
 router
   .route("/dealer")
-  .get(carController.getDealers)
-  .post(carController.postDealer);
+  .get(dealerController.getDealers)
+  .post(dealerController.postDealer);
+
+router
+  .route("/inventory")
+  .get(dealerController.getInventory)
+  .post(dealerController.postInventory);
 
 module.exports = router;

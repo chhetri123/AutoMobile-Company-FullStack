@@ -12,6 +12,7 @@ const brandRoutes = require("./routes/brandRoutes");
 const modelRoutes = require("./routes/modelRoutes");
 const statsRoutes = require("./routes/statsRoutes");
 const dealerRoutes = require("./routes/dealerRoutes");
+const salesRoutes = require("./routes/salesRoutes");
 
 //
 const port = 3000;
@@ -27,14 +28,13 @@ app.use("/api/v1", brandRoutes);
 app.use("/api/v1", modelRoutes);
 app.use("/api/v1", statsRoutes);
 app.use("/api/v1", dealerRoutes);
+app.use("/api/v1", salesRoutes);
 
 app.use(brandRoutes);
 app.use("*", (req, res) => {
-  console.log(req.query);
   res.send("<h1>404</h1> <p>Page not found</p>");
 });
 app.use((err, req, res, next) => {
-  console.log(req.body);
   console.log(err);
   res.status(500).json({ msg: err.message });
 });

@@ -3,7 +3,7 @@ const catchAsync = require("../Utills/catchAsync");
 
 exports.getAllCars = async (req, res) => {
   const cars = await CarModel.getAllData("car");
-  res.status(200).json(cars);
+  res.status(200).json({data:cars});
 };
 
 exports.getCar = async (req, res) => {
