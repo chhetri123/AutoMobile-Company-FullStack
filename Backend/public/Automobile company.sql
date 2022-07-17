@@ -70,10 +70,13 @@ CREATE TABLE `dealer` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(20) Not null,
   `address` varchar(20) NOT NULL,
-  `phone` varchar(15) NOT NULL unique
+  `phone` varchar(15) NOT NULL unique,
+  `inventory_id` INT
 );
 show columns from dealer;
 drop table dealer;
+ALTER TABLE `dealer` 
+ADD COLUMN `inventory_id` INT NULL AFTER `phone`;
 
 
 CREATE TABLE `options` (
@@ -115,9 +118,15 @@ drop table specs;
 CREATE TABLE `inventory` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(20) not null,
-  `address` varchar(20) not null,
-  `dealer_id` int
+  `address` varchar(20) not null
 );
+ALTER TABLE `inventory` 
+DROP FOREIGN KEY `inventory_ibfk_1`;
+
+ALTER TABLE `inventory` 
+DROP COLUMN `dealer_id`,
+DROP INDEX `dealer_id` ;
+
 show columns from inventory;
 drop table inventory;
 
@@ -125,7 +134,7 @@ ALTER TABLE `customer` ADD FOREIGN KEY (`dealer_id`) REFERENCES `dealer` (`id`) 
 ALTER TABLE `sales` ADD FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) on delete cascade;
 ALTER TABLE `sales` ADD FOREIGN KEY (`dealer_id`) REFERENCES `dealer` (`id`) on delete cascade;
 
-
+ALTER TABLE `dealer` ADD FOREIGN KEY (`inventory_id`) references `inventory` (`id`) on delete set null;
 
 
 ALTER TABLE `car` ADD FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) on delete set null;
@@ -205,6 +214,7 @@ insert into engine (power,torque,speed,fuel_type) values
  ("238","830","280","Electric Power"),
 ("150","250","215","Petrol (Gasoline)");
 
+truncate table engine;
 select * from engine;
 
 -- specs
