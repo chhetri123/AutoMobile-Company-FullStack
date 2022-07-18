@@ -13,12 +13,9 @@ const SearchContent = ({ onSubmitQuery }) => {
     [onSubmitQuery]
   );
   useEffect(() => {
-    document.getElementById("query").addEventListener("keydown", handleSubmit);
-
-    return () =>
-      document
-        .getElementById("query")
-        .removeEventListener("keydown", handleSubmit);
+    const instance = inputRef.current;
+    instance?.addEventListener("keydown", handleSubmit);
+    return () => instance?.removeEventListener("keydown", handleSubmit);
   }, [handleSubmit]);
   return (
     <div className="text-center mb-4 admin_search">

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-// import { Navigate } from "react-router-dom";
-import "./Model.css";
+import "./infoModel.css";
 
-const Model = (props) => {
+const InfoModel = (props) => {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -11,7 +10,6 @@ const Model = (props) => {
   const [income, setIncome] = useState("");
   const [dealer, setDealer] = useState("");
   const [message, setMessage] = useState("");
-
   const submitForm = async (e) => {
     e.preventDefault();
     const data = JSON.stringify({
@@ -208,6 +206,7 @@ const Model = (props) => {
                   data-success="Right"
                   className="form-select form-select-lg px-5 py-2 ml-3"
                   name="dealer_id"
+                  value={dealer}
                   onChange={(e) => setDealer(e.target.value)}
                 >
                   <option>Choose Dealer</option>
@@ -236,4 +235,4 @@ const Model = (props) => {
     )
   );
 };
-export default Model;
+export default InfoModel;

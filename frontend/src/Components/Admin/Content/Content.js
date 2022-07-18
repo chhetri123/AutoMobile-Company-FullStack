@@ -18,7 +18,8 @@ const Content = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        setQueryData([]);
+        setErrMsg(err.message);
       });
   }
   useEffect(() => {
@@ -30,30 +31,37 @@ const Content = (props) => {
         });
     }
   }, [props.tableName]);
-
   return (
-    <div className="container">
-      <hr />
-      <div className="row">
-        <div className="col-md-12">
-          <h3 className="text-center text-capitalize">
-            {props.tableName} Table
-          </h3>
-        </div>
+    <>
+      <div className="container">
+        <hr />
+        <div className="row">
+          <div className="col-md-12">
+            <h3 className="text-center text-capitalize">
+              {props.tableName && ""} Table
+            </h3>
+          </div>
+          {props.tableName === undefined ? (
+            <div className="col-md-12">
+              <SearchContent onSubmitQuery={onSubmitQuery} />
+            </div>
+          ) : (
+            ""
+          )}
 
-        <div
-          className={`col-md-12 ${
-            props.tableName === undefined ? "" : "searchBar"
-          }`}
-        >
-          <SearchContent onSubmitQuery={onSubmitQuery} />
-        </div>
-        <div className="col-md-12 tableContainer">
-          <TableContent errMsg={errMsg} queryData={queryData} />
-          <hr />
+          <div className="col-md-12 tableContainer">
+            <TableContent
+              errMsg={errMsg}
+              queryData={queryData}
+              addData={props.modelId}
+            />
+            <hr />
+          </div>
         </div>
       </div>
-    </div>
+
+      {props.element}
+    </>
   );
 };
 export default Content;

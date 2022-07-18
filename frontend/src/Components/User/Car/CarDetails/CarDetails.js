@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import Header from "../../../Template/Header";
 import LeftDetails from "./LeftDetails";
 import RightDetails from "./RightDetails";
-import Model from "./Model";
+import Model from "../../../Template/FormModel/InfoModel";
 
 const CarDetails = () => {
   const { id, id1, id2 } = useParams();
@@ -28,10 +28,10 @@ const CarDetails = () => {
         <Header headerName="Car Info" />
         <hr />
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-5">
             <LeftDetails data={carDetails} />
           </div>
-          <div className="col-md-8">
+          <div className="col-md-7">
             <RightDetails data={carDetails} />
           </div>
         </div>

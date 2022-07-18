@@ -1,0 +1,7 @@
+@media (min-width: 576px) {
+
+    .carModelDialog {
+        max-width: none !important;
+        margin: 30px !important;
+    }
+}

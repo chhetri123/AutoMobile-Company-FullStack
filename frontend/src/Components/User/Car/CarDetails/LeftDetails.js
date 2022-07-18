@@ -29,12 +29,12 @@ const LeftDetails = (props) => {
             </h3>
             <hr />
             <h4>Dealer</h4>
-            <table className="text-center table table-sm table-striped">
+            <table className="text-center table table table-striped">
               <tbody className="text-dark">
                 {props.data.dealers.map((el) => (
                   <TableRow
                     fromUser={true}
-                    data={Object.values(el)}
+                    data={Object.values(el).slice(1, 4)}
                     key={Math.random()}
                   />
                 ))}
