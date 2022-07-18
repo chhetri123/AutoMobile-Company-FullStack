@@ -75,6 +75,9 @@ CREATE TABLE `dealer` (
 );
 show columns from dealer;
 drop table dealer;
+select * from dealer;
+
+select * from dealer where inventory_id=1;
 ALTER TABLE `dealer` 
 ADD COLUMN `inventory_id` INT NULL AFTER `phone`;
 

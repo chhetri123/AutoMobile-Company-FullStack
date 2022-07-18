@@ -3,7 +3,7 @@ const catchAsync = require("../Utills/catchAsync");
 
 exports.getAllCars = async (req, res) => {
   const cars = await CarModel.getAllData("car");
-  res.status(200).json({data:cars});
+  res.status(200).json({ data: cars });
 };
 
 exports.getCar = async (req, res) => {
@@ -31,13 +31,12 @@ exports.getCarInfo = async (req, res) => {
     if (car.length <= 0) {
       return res.status(404).json({ status: 404, msg: "Car Not Found" });
     }
-    const { option_id } = car[0];
+    const { option_id, inventory_id } = car[0];
     const carInfo = await CarModel.getCarInfo(option_id, req.params.model_id);
-
     const [inventory] = await CarModel.getCarInventory(req.params.id);
 
     const dealers = await CarModel.find("dealer", {
-      id: inventory.dealer_id,
+      inventory_id,
     });
 
     delete car[0].option_id;
@@ -66,7 +65,7 @@ exports.postCar = catchAsync(async (req, res) => {
   });
 
   const specs = await CarModel.insert("specs", {
-    font_sus: frontSus,
+    front_sus: frontSus,
     rear_sus: rearSus,
     front_brake: frontBrake,
     rear_brake: rearBrake,

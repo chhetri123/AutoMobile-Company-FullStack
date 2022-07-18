@@ -42,7 +42,7 @@ class CarModel extends MySql {
 
   async getCarInventory(id) {
     try {
-      const query = `select I.name,address,I.dealer_id from car join inventory as I on car.inventory_id=I.id where car.id=${id};`;
+      const query = `select I.name,address from car join inventory as I on car.inventory_id=I.id where car.id=${id};`;
       return await promise(query, "");
     } catch (error) {
       throw new Error(error);

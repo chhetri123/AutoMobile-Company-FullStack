@@ -8,14 +8,15 @@ exports.getDealers = catchAsync(async (req, res) => {
 });
 
 exports.postDealer = catchAsync(async (req, res) => {
-  const { name, address, phone } = req.body;
-  console.log(req.query);
+  const { name, address, phone, inventoryID } = req.body;
+
   const dealer = await MySql.insert("dealer", {
     name,
     address,
     phone,
+    inventory_id: inventoryID,
   });
-  console.log(dealer);
+
   res.status(200).json(dealer);
 });
 
@@ -24,12 +25,10 @@ exports.getInventory = catchAsync(async (req, res) => {
   res.status(200).json({ status: 200, data: inventory });
 });
 exports.postInventory = catchAsync(async (req, res) => {
-  const { name, address, dealerID } = req.body;
+  const { name, address } = req.body;
   const inventory = await MySql.insert("inventory", {
     name,
     address,
-    dealer_id: dealerID,
   });
-  console.log(dealer);
-  res.status(200).json(inventory);
+  res.status(200).json({ status: 200, data: inventory });
 });
