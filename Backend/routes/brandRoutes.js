@@ -5,7 +5,10 @@ const brandController = require("../controller/brandController");
 const modelController = require("../controller/modelController");
 const carController = require("../controller/carController");
 
-router.get("/brand", brandController.getAllBrands);
+router
+  .route("/brand")
+  .get(brandController.getAllBrands)
+  .post(brandController.postBrand);
 router.get("/brand/:id/models", modelController.getModels);
 router.get("/brand/:id/models/:id/cars", carController.getCarWithModelId);
 router.get(
