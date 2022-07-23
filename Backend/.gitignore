@@ -2,3 +2,4 @@ node_modules
 package-lock.json
 server.js
 data.sql
+*.env

@@ -1,6 +1,8 @@
 const mysql = require("./server");
 const express = require("express");
 const app = express();
+require("dotenv").config({ path: "./config.env" });
+
 const path = require("path");
 const bodyParser = require("body-parser");
 let cors = require("cors");
@@ -15,7 +17,7 @@ const dealerRoutes = require("./routes/dealerRoutes");
 const salesRoutes = require("./routes/salesRoutes");
 
 //
-const port = 3000;
+const port = 3000 || process.env.PORT;
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -30,20 +32,24 @@ app.use("/api/v1", statsRoutes);
 app.use("/api/v1", dealerRoutes);
 app.use("/api/v1", salesRoutes);
 
-app.use(brandRoutes);
 app.use("*", (req, res) => {
-  res.send("<h1>404</h1> <p>Page not found</p>");
+  res.status(404).json({ status: 404, msg: "Page not found" });
 });
 app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(500).json({ msg: err.message });
+  if (process.env.NODE_ENV == "development") {
+    console.log(err);
+  }
+  res.status(500).json({ status: 500, msg: err.message });
 });
-mysql.getConnection((err, connection) => {
+
+mysql.query("SELECT 1+1", function (err, rows, fields) {
   if (err) {
     throw err;
   }
   app.listen(port, () => {
-    console.log("Server listening on port", port);
-    console.log("Database Connected ");
+    if (process.env.NODE_ENV === "development") {
+      console.log("Server listening on port", port);
+      console.log("Database Connected ");
+    }
   });
 });

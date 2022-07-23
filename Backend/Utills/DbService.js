@@ -25,7 +25,6 @@ class MySql {
     }
   }
   async insert(name, data) {
-    console.log(data)
     try {
       const query = `INSERT INTO ${name} SET ?`;
       return await promise(query, data);
