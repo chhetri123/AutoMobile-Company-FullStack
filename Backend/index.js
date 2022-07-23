@@ -17,13 +17,14 @@ const dealerRoutes = require("./routes/dealerRoutes");
 const salesRoutes = require("./routes/salesRoutes");
 
 //
-const port = 3000 || process.env.PORT;
+const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+//
 app.use("/api/v1", customerRoutes);
 app.use("/api/v1", carRoutes);
 app.use("/api/v1", brandRoutes);
