@@ -4,7 +4,7 @@ const Header = () => {
   const [tableStats, setTableStats] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/v1/stats")
+    fetch(`${process.env.REACT_APP_ROOT_API}/stats`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {

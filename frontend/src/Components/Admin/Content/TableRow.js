@@ -4,7 +4,12 @@ const TableRow = (props) => {
     <tr key={Math.random()}>
       {props.fromUser ? "" : <th scope="row">{props.sn}</th>}
       {props.data.map((el) => (
-        <td key={Math.random()}>{el}</td>
+        <td
+          key={Math.random()}
+          style={props.fromUser ? { color: "black" } : {}}
+        >
+          {el}
+        </td>
       ))}
     </tr>
   );

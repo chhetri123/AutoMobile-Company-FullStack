@@ -19,12 +19,12 @@ const InfoModel = (props) => {
       phone,
       gender,
       income,
+      carID: props.carID,
       dealer_id: dealer,
     });
 
-    console.log(data);
     try {
-      let res = await fetch("http://localhost:3000/api/v1/customer", {
+      let res = await fetch(`${process.env.REACT_APP_ROOT_API}/customer`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +42,7 @@ const InfoModel = (props) => {
         setIncome("");
         setDealer("");
 
-        setMessage("Thanks for Buying 😊");
+        setMessage("Thanks For  Buying ❤️ ! Enjoy Ride");
         setTimeout(() => {
           setMessage("");
           window.location.pathname = "/";

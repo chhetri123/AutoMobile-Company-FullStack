@@ -3,6 +3,7 @@ import AdminComponent from "./Components/Admin";
 import UserComponent from "./Components/User";
 import "./App.css";
 const App = () => {
+  console.log();
   return (
     <div className="App">
       <Routes>

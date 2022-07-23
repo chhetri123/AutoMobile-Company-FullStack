@@ -22,6 +22,7 @@ const ListTemplate = (props) => {
                   {props.data.map((item, id) => (
                     <Card
                       data={item}
+                      model={props.model}
                       isTrue={props.isTrue}
                       isCarFromModel={props.isCarFromModel}
                       key={item.name + item.id}

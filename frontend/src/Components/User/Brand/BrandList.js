@@ -4,7 +4,7 @@ const BrandList = () => {
   const [brands, setBrands] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/v1/brand")
+    fetch(`${process.env.REACT_APP_ROOT_API}/brand`)
       .then((res) => res.json())
       .then((data) => {
         setBrands(data.data);

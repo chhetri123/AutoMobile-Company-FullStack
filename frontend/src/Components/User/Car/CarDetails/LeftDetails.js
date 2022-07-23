@@ -1,19 +1,16 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import TableRow from "../../../Admin/Content/TableRow";
 const LeftDetails = (props) => {
   const { pathname } = useLocation();
+  const backLocation = pathname.split("/").slice(0, 6).join("/");
   return (
     <>
       {props.data.url && (
         <>
           <div className="media">
             <img
-              src={`/images/${
-                props.data.url
-                  ? props.data?.url.replace(".png", ".jpg")
-                  : "default.jpg"
-              }`}
+              src={`${process.env.REACT_APP_ROOT_FILE_SERVER}/${props.data.url}`}
               alt={props.data.name}
               style={{
                 width: "100%",
@@ -42,20 +39,24 @@ const LeftDetails = (props) => {
             </table>
           </div>
           <div className="mt-lg-4 my-5">
-            <Link
-              to={pathname}
+            <a
+              href={backLocation}
               type="button"
               className="btn ms-xl-5 mx-5 btn-group btn-rounded"
             >
               Back
-            </Link>
-            <button
-              className="btn btn-primary btn-rounded"
-              data-toggle="modal"
-              data-target="#modalRegisterForm"
-            >
-              Purchase
-            </button>
+            </a>
+            {!props.data.customer_id ? (
+              <button
+                className="btn btn-primary btn-rounded"
+                data-toggle="modal"
+                data-target="#modalRegisterForm"
+              >
+                Purchase
+              </button>
+            ) : (
+              <button className="btn btn-rounded">Sold out</button>
+            )}
           </div>
         </>
       )}

@@ -10,7 +10,7 @@ const ModelFormInfo = (props) => {
   const [message, setMessage] = useState("");
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3000/api/v1/brand")
+    fetch(`${process.env.REACT_APP_ROOT_API}/brand`)
       .then((res) => res.json())
       .then((res) => {
         setData(res.data);
@@ -29,7 +29,7 @@ const ModelFormInfo = (props) => {
       bodyStyle,
     });
     try {
-      let res = await fetch("http://localhost:3000/api/v1/model", {
+      let res = await fetch(`${process.env.REACT_APP_ROOT_API}/model`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,6 +37,7 @@ const ModelFormInfo = (props) => {
         body: data,
       });
       // console.log(name, url, email, year, gender, income, dealer);
+      console.log(res);
       let resJson = await res.json();
       if (resJson.status === 200) {
         setName("");

@@ -1,9 +1,10 @@
 import React from "react";
+import axios from "axios";
 import { useState, useEffect } from "react";
 import "./CarInfoModel.css";
 
-const DataModel = () => {
-  const [model, setModel] = useState([]);
+const CarInfoModel = () => {
+  const [inventory, setInventory] = useState("");
   const [VIN, SetVIN] = useState("");
   const [name, SetName] = useState("");
   const [url, SetUrl] = useState("");
@@ -17,15 +18,23 @@ const DataModel = () => {
   const [torque, SetTorque] = useState("");
   const [fuelType, SetFuelType] = useState("");
   const [speed, SetSpeed] = useState("");
+  const [modelData, setModelData] = useState([]);
+  const [inventoryData, setInventoryData] = useState([]);
+
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/v1/model")
+    fetch(`${process.env.REACT_APP_ROOT_API}/model`)
       .then((data) => data.json())
       .then((res) => {
-        setModel(res.data);
+        setModelData(res.data);
+        setInventoryData(res.inventory);
       });
-  }, [model]);
+  }, [modelData, inventoryData]);
+
+  const saveFile = (e) => {
+    SetUrl(e.target.files[0]);
+  };
 
   const carHandler = (e) => {
     e.preventDefault();
@@ -51,26 +60,30 @@ const DataModel = () => {
       option: {
         color,
       },
-    });
-
-    fetch("http://localhost:3000/api/v1/car", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+      inventory: {
+        inventoryId: inventory,
       },
-      body: data,
-    })
-      .then((data) => data.json())
+    });
+    const formData = new FormData();
+    formData.append("file", url);
+    formData.append("data", data);
+
+    axios
+      .post(`${process.env.REACT_APP_ROOT_API}/car`, formData)
       .then((res) => {
+        console.log(res);
         if (res.status === 200) {
+          console.log(res);
           setMessage("Car Added Successfully");
           setTimeout(() => {
             window.location.reload();
           }, 1500);
+        } else {
+          setMessage(res.msg);
         }
       })
       .catch((err) => {
-        console.log(err);
+        setMessage(err.message);
       });
   };
   return (
@@ -138,6 +151,14 @@ const DataModel = () => {
                 </div>
                 <div className="md-form m-1">
                   <i className="fas fa-mobile prefix grey-text mr-3"></i>
+
+                  <input
+                    type="file"
+                    id={`orangeForm-url`}
+                    onChange={saveFile}
+                    accept="image/*"
+                    className="form-control validate w-70"
+                  />
                   <label
                     data-error="wrong"
                     data-success="right"
@@ -145,13 +166,6 @@ const DataModel = () => {
                   >
                     Car Image Url/Name
                   </label>
-                  <input
-                    type="text"
-                    id={`orangeForm-url`}
-                    value={url}
-                    onChange={(e) => SetUrl(e.target.value)}
-                    className="form-control validate w-70"
-                  />
                 </div>
                 <div className="md-form" style={{ margin: "21px 0" }}>
                   <i className="fa-solid fa-user mr-1 mr3"></i>
@@ -165,11 +179,14 @@ const DataModel = () => {
                       data-success="Right"
                       className="form-select form-select-lg px-5 py-2 ml-2"
                       name="modelName"
+                      value={modelId}
                       onChange={(e) => SetModelId(e.target.value)}
                     >
                       <option>Model</option>
-                      {model.map((el) => (
-                        <option value={el.id}>{el.name}</option>
+                      {modelData.map((el) => (
+                        <option value={el.id} key={Math.random()}>
+                          {el.name}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -336,6 +353,30 @@ const DataModel = () => {
                 />
               </div>
             </div>
+            <div className="md-form" style={{ margin: "21px 0" }}>
+              <i className="fa-solid fa-user mr-1 mr3"></i>
+              <label data-error="wrong" data-success="right">
+                Car Inventory Name
+              </label>
+
+              <div>
+                <select
+                  data-error="Wromg"
+                  data-success="Right"
+                  className="form-select form-select-lg px-5 py-2 ml-2"
+                  value={inventory}
+                  onChange={(e) => setInventory(e.target.value)}
+                >
+                  <option>Inventory</option>
+
+                  {inventoryData.map((el) => (
+                    <option value={el.id} key={Math.random()}>
+                      {el.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
             <p className="text-center text-success"> {message}</p>
             <div className="modal-footer d-flex mt-3 justify-content-center">
               <button className="btn btn-deep-orange">
@@ -349,4 +390,4 @@ const DataModel = () => {
     </div>
   );
 };
-export default DataModel;
+export default CarInfoModel;

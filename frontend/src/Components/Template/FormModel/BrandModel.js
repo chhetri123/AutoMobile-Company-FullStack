@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./infoModel.css";
 
 const BrandModel = () => {
@@ -8,21 +9,14 @@ const BrandModel = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
-    const data = JSON.stringify({
-      name,
-      url,
-    });
-
     try {
-      let res = await fetch("http://localhost:3000/api/v1/brand", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: data,
+      let res = await axios.post(`${process.env.REACT_APP_ROOT_API}/brand`, {
+        name,
+        url,
       });
-      let resJson = await res.json();
-      if (resJson.status === 200) {
+      console.log(res);
+      // let resJson = await res.json();
+      if (res.status === 200) {
         setName("");
         seturl("");
         setTimeout(() => {
@@ -30,9 +24,10 @@ const BrandModel = () => {
           window.location.reload();
         }, 1500);
       } else {
-        setMessage(resJson.msg);
+        setMessage(res.msg);
       }
     } catch (err) {
+      console.log(err);
       setMessage(err.message);
     }
   };
@@ -48,7 +43,7 @@ const BrandModel = () => {
         <div className="modal-content">
           <div className="modal-header text-center">
             <h4 className="modal-title text-center w-100 font-weight-bold">
-              Add Inventory
+              Add Brand
             </h4>
             <button
               type="button"

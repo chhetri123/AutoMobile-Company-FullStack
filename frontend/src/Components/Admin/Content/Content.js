@@ -7,7 +7,7 @@ const Content = (props) => {
   const [errMsg, setErrMsg] = useState("Enter the Query For data");
 
   function onSubmitQuery(query) {
-    fetch(`http://localhost:3000/api/v1/getquery?query=${query}`)
+    fetch(`${process.env.REACT_APP_ROOT_API}/getquery?query=${query}`)
       .then((data) => data.json())
       .then((res) => {
         if (res.status === 200) {
@@ -24,7 +24,7 @@ const Content = (props) => {
   }
   useEffect(() => {
     if (props.tableName) {
-      fetch(`http://localhost:3000/api/v1/${props.tableName}`)
+      fetch(`${process.env.REACT_APP_ROOT_API}/${props.tableName}`)
         .then((data) => data.json())
         .then((res) => {
           setQueryData(res.data);

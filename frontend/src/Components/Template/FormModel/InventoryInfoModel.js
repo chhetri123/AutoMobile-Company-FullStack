@@ -15,9 +15,8 @@ const InventoryInfoModel = () => {
       phone,
     });
 
-    console.log(data);
     try {
-      let res = await fetch("http://localhost:3000/api/v1/inventory", {
+      let res = await fetch(`${process.env.REACT_APP_ROOT_API}/inventory`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

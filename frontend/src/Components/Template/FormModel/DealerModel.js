@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./infoModel.css";
 
 const DealerModel = (props) => {
@@ -9,10 +10,10 @@ const DealerModel = (props) => {
   const [message, setMessage] = useState("");
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3000/api/v1/inventory")
-      .then((res) => res.json())
+    axios
+      .get(`${process.env.REACT_APP_ROOT_API}/inventory`)
       .then((res) => {
-        setData(res.data);
+        setData(res.data.data);
       })
       .catch((err) => {
         setMessage(err.msg);
@@ -20,33 +21,30 @@ const DealerModel = (props) => {
   });
   const submitForm = async (e) => {
     e.preventDefault();
-    const data = JSON.stringify({
+    const data = {
       name,
       address,
       phone,
       inventoryID,
-    });
+    };
     try {
-      let res = await fetch("http://localhost:3000/api/v1/dealer", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: data,
-      });
-      let resJson = await res.json();
-      if (resJson.status === 200) {
+      let res = await axios.post(
+        `${process.env.REACT_APP_ROOT_API}/dealer`,
+        data
+      );
+
+      if (res.status === 200) {
         setName("");
         setAddress("");
         setPhone("");
 
-        setMessage("Thanks for Buying 😊");
+        setMessage("Dealer Successfully Added");
         setTimeout(() => {
           setMessage("");
           window.location.reload();
         }, 1500);
       } else {
-        setMessage(resJson.msg);
+        setMessage(res.msg);
       }
     } catch (err) {
       setMessage(err.message);

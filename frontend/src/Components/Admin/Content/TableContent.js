@@ -2,7 +2,6 @@ import React from "react";
 import TableRow from "./TableRow";
 import "./TableContent.css";
 const TableContent = ({ queryData, errMsg, addData }) => {
-  console.log(addData);
   return queryData.length === 0 ? (
     <div className="text-center">{errMsg}</div>
   ) : (
@@ -29,6 +28,7 @@ const TableContent = ({ queryData, errMsg, addData }) => {
               </th>
             ))}
           </tr>
+
           {queryData.map((el, ind) => (
             <TableRow
               key={"" + Math.random()}

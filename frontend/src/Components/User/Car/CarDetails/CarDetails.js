@@ -12,7 +12,7 @@ const CarDetails = () => {
   // const [modelDetails, setModelDetails] = useState([]);
   useEffect(() => {
     fetch(
-      `http://localhost:3000/api/v1/brand/${id1}/models/${id}/cars/${id2}/details`
+      `${process.env.REACT_APP_ROOT_API}/brand/${id1}/models/${id}/cars/${id2}/details`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -33,10 +33,13 @@ const CarDetails = () => {
           </div>
           <div className="col-md-7">
             <RightDetails data={carDetails} />
+            <h3>
+              Price : RS {carDetails?.price?.toLocaleString() || "200000"}
+            </h3>
           </div>
         </div>
       </div>
-      <Model data={carDetails.dealers} />
+      <Model data={carDetails.dealers} carID={id2} />
     </div>
   );
 };

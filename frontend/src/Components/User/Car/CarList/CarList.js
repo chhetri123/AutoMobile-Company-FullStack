@@ -10,7 +10,7 @@ const CarList = (props) => {
   useEffect(() => {
     if (props.isCarFromModel || id) {
       fetch(
-        `http://localhost:3000/api/v1/${
+        `${process.env.REACT_APP_ROOT_API}/${
           props.isCarFromModel ? "" : `brand/${id1}/`
         }models/${id}/cars`
       )
@@ -28,6 +28,7 @@ const CarList = (props) => {
     <CarCard
       data={carList}
       isTrue={false}
+      model={model}
       title={`Car Lists of Model ${model}`}
       isCarFromModel={props.isCarFromModel}
     />

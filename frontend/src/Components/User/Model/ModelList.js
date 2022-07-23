@@ -3,13 +3,12 @@ import { useParams } from "react-router-dom";
 import ModelCard from "../../Template/ListTemplete";
 const ModelList = (props) => {
   const { id } = useParams();
-  // console.log(props, id);
   const [models, setModels] = useState([]);
   const [brand, setBrand] = useState("");
   useEffect(() => {
     if (id || props.isModel) {
       fetch(
-        `http://localhost:3000/api/v1/${
+        `${process.env.REACT_APP_ROOT_API}/${
           props.isModel ? "model" : `brand/${id}/models`
         }`
       )
