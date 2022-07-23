@@ -48,5 +48,52 @@ class CarModel extends MySql {
       throw new Error(error);
     }
   }
+
+  async postCarInfo(data, req) {
+    const date = new Date();
+    req.file.filename = `${
+      req.file.originalname.split(".")[0] + date.getTime()
+    }.png`;
+    const { VIN, name, modelId } = data.car;
+    const { power, torque, fuelType, speed } = data.engine;
+    const { frontSus, rearSus, frontBrake, rearBrake } = data.specs;
+    const { color } = data.option;
+    const { inventoryId } = data.inventory;
+    try {
+      await promise("SET autocommit = OFF", "");
+      await promise("START TRANSACTION", "");
+      const engine = await this.insert("engine", {
+        power,
+        torque,
+        fuel_type: fuelType,
+        speed,
+      });
+
+      const specs = await this.insert("specs", {
+        front_sus: frontSus,
+        rear_sus: rearSus,
+        front_brake: frontBrake,
+        rear_brake: rearBrake,
+      });
+      const option = await this.insert("options", {
+        color,
+        engine_id: engine.insertId,
+        specs_id: specs.insertId,
+        model_id: modelId,
+      });
+      await this.insert("car", {
+        VIN,
+        name,
+        url: req.file.filename,
+        model_id: modelId,
+        option_id: option.insertId,
+        inventory_id: inventoryId,
+      });
+      await promise("COMMIT", "");
+    } catch (error) {
+      await promise("ROLLBACK", "");
+      throw new Error(error);
+    }
+  }
 }
 module.exports = new CarModel();
