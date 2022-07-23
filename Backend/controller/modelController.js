@@ -9,7 +9,8 @@ exports.getModels = async (req, res) => {
 exports.getAllModels = async (req, res) => {
   try {
     const models = await MySql.getAllData("model");
-    res.status(200).json({ data: models });
+    const inventory = await MySql.getAllData("inventory");
+    res.status(200).json({ data: models, inventory });
   } catch (err) {
     res.status(500).json({ msg: err.msg });
   }
@@ -25,7 +26,7 @@ exports.postModel = async (req, res) => {
       body_style: bodyStyle,
       brand_id,
     });
-    res.status(200).json({ model });
+    res.status(200).json({ status: 200, model });
   } catch (err) {
     res.status(500).json({ msg: err.msg });
   }

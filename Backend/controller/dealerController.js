@@ -10,14 +10,14 @@ exports.getDealers = catchAsync(async (req, res) => {
 exports.postDealer = catchAsync(async (req, res) => {
   const { name, address, phone, inventoryID } = req.body;
 
-  const dealer = await MySql.insert("dealer", {
+  await MySql.insert("dealer", {
     name,
     address,
     phone,
     inventory_id: inventoryID,
   });
 
-  res.status(200).json(dealer);
+  res.status(200).json({ status: 200, msg: "Data added successfully" });
 });
 
 exports.getInventory = catchAsync(async (req, res) => {
