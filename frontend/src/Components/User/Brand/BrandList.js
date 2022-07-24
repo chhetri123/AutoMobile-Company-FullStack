@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BrandCard from "../../Template/ListTemplete";
 const BrandList = () => {
-  const [brands, setBrands] = useState([]);
+  const [brands, setBrands] = useState(null);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_ROOT_API}/brand`)

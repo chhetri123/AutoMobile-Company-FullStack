@@ -4,7 +4,7 @@
 
 
 body {
-    height: 120vh;
+    height: 150vh;
     background: linear-gradient(0deg, rgba(255, 255, 0, 0.014), rgba(0, 0, 255, 0.336)),
         url("/assets/images/bg-body.png");
     background-repeat: no-repeat;
@@ -21,14 +21,13 @@ body {
 }
 
 footer {
-    position: absolute;
     margin-left: 12%;
+    margin: 10% 12%;
     background-color: rgba(127, 255, 212, 0.363);
     color: black;
     width: 76%;
-    align-items: center;
-    /* margin-bottom: 5px; */
-
+    height: 54px;
+    padding-top: 15px;
 }
 
 footer p {

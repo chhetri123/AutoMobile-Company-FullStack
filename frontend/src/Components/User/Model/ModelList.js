@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import ModelCard from "../../Template/ListTemplete";
 const ModelList = (props) => {
   const { id } = useParams();
-  const [models, setModels] = useState([]);
-  const [brand, setBrand] = useState("");
+  const [models, setModels] = useState(null);
+  const [brand, setBrand] = useState(null);
   useEffect(() => {
     if (id || props.isModel) {
       fetch(

@@ -5,20 +5,21 @@ import Header from "../../../Template/Header";
 import LeftDetails from "./LeftDetails";
 import RightDetails from "./RightDetails";
 import Model from "../../../Template/FormModel/InfoModel";
-
+import axios from "axios";
 const CarDetails = () => {
   const { id, id1, id2 } = useParams();
   const [carDetails, setCarDetails] = useState({});
-  // const [modelDetails, setModelDetails] = useState([]);
+  const [showMessage, setMessage] = useState({ msg: "" });
+
   useEffect(() => {
-    fetch(
-      `${process.env.REACT_APP_ROOT_API}/brand/${id1}/models/${id}/cars/${id2}/details`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setCarDetails(data[0]);
+    axios
+      .get(
+        `${process.env.REACT_APP_ROOT_API}/brand/${id1}/models/${id}/cars/${id2}/details`
+      )
+      .then((res) => {
+        setCarDetails(res.data[0]);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setMessage({ msg: err.message }));
   }, [id2, id1, id]);
 
   return (
@@ -28,15 +29,21 @@ const CarDetails = () => {
         <Header headerName="Car Info" />
         <hr />
         <div className="row">
-          <div className="col-md-5">
-            <LeftDetails data={carDetails} />
-          </div>
-          <div className="col-md-7">
-            <RightDetails data={carDetails} />
-            <h3>
-              Price : RS {carDetails?.price?.toLocaleString() || "200000"}
-            </h3>
-          </div>
+          {showMessage.msg ? (
+            <div className="alert alert-danger">{showMessage.msg}</div>
+          ) : (
+            <>
+              <div className="col-md-5">
+                <LeftDetails data={carDetails} />
+              </div>
+              <div className="col-md-7">
+                <RightDetails data={carDetails} />
+                <h3>
+                  Price : RS {(+carDetails.price).toLocaleString() || "200000"}
+                </h3>
+              </div>
+            </>
+          )}
         </div>
       </div>
       <Model data={carDetails.dealers} carID={id2} />
