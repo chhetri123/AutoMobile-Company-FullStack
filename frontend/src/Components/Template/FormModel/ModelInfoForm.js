@@ -37,7 +37,7 @@ const ModelFormInfo = (props) => {
         body: data,
       });
       // console.log(name, url, email, year, gender, income, dealer);
-      console.log(res);
+
       let resJson = await res.json();
       if (resJson.status === 200) {
         setName("");

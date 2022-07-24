@@ -3,6 +3,18 @@ import { NavLink } from "react-router-dom";
 import "./NavBar.css";
 
 const NavBar = (props) => {
+  function checkRole(e) {
+    const item = JSON.parse(localStorage.getItem("isAdmin"));
+    console.log(item);
+    if (props.navItems.role === "User") {
+      const email = prompt("Enter Email Address");
+      props.handleUser(email);
+    }
+    if (props.navItems.role === "Admin") {
+      localStorage.setItem("isAdmin", JSON.stringify(false));
+      window.location.href = "/";
+    }
+  }
   return (
     <>
       <nav
@@ -34,11 +46,15 @@ const NavBar = (props) => {
           </div>
 
           <div className="d-flex align-items-center">
-            <a href={props.navItems.link}>
-              <button className="btn btn-default" style={{ fontWeight: "600" }}>
-                {props.navItems.role}
-              </button>
-            </a>
+            {/* <a href={props.navItems.link}> */}
+            <button
+              className="btn btn-default"
+              style={{ fontWeight: "600" }}
+              onClick={checkRole}
+            >
+              {props.navItems.role}
+            </button>
+            {/* </a> */}
           </div>
         </div>
       </nav>

@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import "./infoModel.css";
 
@@ -12,7 +13,7 @@ const InfoModel = (props) => {
   const [message, setMessage] = useState("");
   const submitForm = async (e) => {
     e.preventDefault();
-    const data = JSON.stringify({
+    const data = {
       name,
       address,
       email,
@@ -21,19 +22,17 @@ const InfoModel = (props) => {
       income,
       carID: props.carID,
       dealer_id: dealer,
-    });
+    };
 
     try {
-      let res = await fetch(`${process.env.REACT_APP_ROOT_API}/customer`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: data,
-      });
+      let res = await axios.post(
+        `${process.env.REACT_APP_ROOT_API}/customer`,
+        data
+      );
       // console.log(name, address, email, phone, gender, income, dealer);
-      let resJson = await res.json();
-      if (resJson.status === 200) {
+
+    
+      if (res.status === 200) {
         setName("");
         setEmail("");
         setAddress("");
@@ -48,7 +47,7 @@ const InfoModel = (props) => {
           window.location.pathname = "/";
         }, 1500);
       } else {
-        setMessage(resJson.msg);
+        setMessage(res.msg);
       }
     } catch (err) {
       setMessage(err.message);

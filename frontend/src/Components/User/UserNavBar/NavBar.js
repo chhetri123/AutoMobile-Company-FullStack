@@ -11,10 +11,14 @@ const navItems = {
   ],
 };
 
-const UserNavBar = () => {
+const UserNavBar = (props) => {
   return (
     <>
-      <NavBar navItems={navItems} isStyle={false} />
+      <NavBar
+        navItems={navItems}
+        handleUser={props.handleUser}
+        isStyle={false}
+      />
     </>
   );
 };

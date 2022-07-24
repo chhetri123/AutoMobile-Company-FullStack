@@ -14,6 +14,7 @@ const CarInfoModel = () => {
   const [frontBrake, SetFrontBrake] = useState("");
   const [rearBrake, SetRearBrake] = useState("");
   const [color, SetColor] = useState("");
+  const [price, SetPrice] = useState("");
   const [power, SetPower] = useState("");
   const [torque, SetTorque] = useState("");
   const [fuelType, SetFuelType] = useState("");
@@ -24,12 +25,10 @@ const CarInfoModel = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_ROOT_API}/model`)
-      .then((data) => data.json())
-      .then((res) => {
-        setModelData(res.data);
-        setInventoryData(res.inventory);
-      });
+    axios.get(`${process.env.REACT_APP_ROOT_API}/model`).then((res) => {
+      setModelData(res.data.data);
+      setInventoryData(res.data.inventory);
+    });
   }, [modelData, inventoryData]);
 
   const saveFile = (e) => {
@@ -44,6 +43,7 @@ const CarInfoModel = () => {
         name,
         url,
         modelId,
+        price,
       },
       engine: {
         power,
@@ -67,17 +67,20 @@ const CarInfoModel = () => {
     const formData = new FormData();
     formData.append("file", url);
     formData.append("data", data);
+    setMessage(
+      `It will take time.\n
+        Please wait a second`
+    );
 
     axios
       .post(`${process.env.REACT_APP_ROOT_API}/car`, formData)
       .then((res) => {
-        console.log(res);
+        
         if (res.status === 200) {
-          console.log(res);
           setMessage("Car Added Successfully");
           setTimeout(() => {
             window.location.reload();
-          }, 1500);
+          }, 1000);
         } else {
           setMessage(res.msg);
         }
@@ -146,6 +149,24 @@ const CarInfoModel = () => {
                     id={`orangeForm-name`}
                     value={name}
                     onChange={(e) => SetName(e.target.value)}
+                    className="form-control validate w-70"
+                  />
+                </div>
+                <div className="md-form m-1">
+                  <i className="fas fa-location-arrow prefix grey-text mr-3"></i>
+                  <label
+                    data-error="wrong"
+                    data-success="right"
+                    htmlFor="orangeForm-price"
+                  >
+                    Price
+                  </label>
+                  <input
+                    type="number"
+                    min={0}
+                    id={`orangeForm-price`}
+                    value={price}
+                    onChange={(e) => SetPrice(e.target.value)}
                     className="form-control validate w-70"
                   />
                 </div>
@@ -261,6 +282,25 @@ const CarInfoModel = () => {
                     className="form-control validate"
                   />
                 </div>
+                <div className="md-form justify-content-center">
+                  <i className="fa-solid fa-handshake mr-3"></i>
+                  <label
+                    data-error="wrong"
+                    data-success="right"
+                    htmlFor="orangeForm-color"
+                  >
+                    Color
+                  </label>
+                  <div>
+                    <input
+                      type="text"
+                      id="orangeForm-color"
+                      value={color}
+                      onChange={(e) => SetColor(e.target.value)}
+                      className="form-control validate "
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="col-md-4">
@@ -332,54 +372,36 @@ const CarInfoModel = () => {
                     className="form-control validate"
                   />
                 </div>
-              </div>
-            </div>
-            <div className="md-form justify-content-center">
-              <i className="fa-solid fa-handshake mr-3"></i>
-              <label
-                data-error="wrong"
-                data-success="right"
-                htmlFor="orangeForm-color"
-              >
-                Color
-              </label>
-              <div>
-                <input
-                  type="text"
-                  id="orangeForm-color"
-                  value={color}
-                  onChange={(e) => SetColor(e.target.value)}
-                  className="form-control validate w-25"
-                />
-              </div>
-            </div>
-            <div className="md-form" style={{ margin: "21px 0" }}>
-              <i className="fa-solid fa-user mr-1 mr3"></i>
-              <label data-error="wrong" data-success="right">
-                Car Inventory Name
-              </label>
+                <div className="md-form" style={{ margin: "21px 0" }}>
+                  <i className="fa-solid fa-user mr-1 mr3"></i>
+                  <label data-error="wrong" data-success="right">
+                    Car Inventory Name
+                  </label>
 
-              <div>
-                <select
-                  data-error="Wromg"
-                  data-success="Right"
-                  className="form-select form-select-lg px-5 py-2 ml-2"
-                  value={inventory}
-                  onChange={(e) => setInventory(e.target.value)}
-                >
-                  <option>Inventory</option>
+                  <div>
+                    <select
+                      data-error="Wromg"
+                      data-success="Right"
+                      className="form-select form-select-lg px-5 py-2 ml-2"
+                      value={inventory}
+                      onChange={(e) => setInventory(e.target.value)}
+                    >
+                      <option>Inventory</option>
 
-                  {inventoryData.map((el) => (
-                    <option value={el.id} key={Math.random()}>
-                      {el.name}
-                    </option>
-                  ))}
-                </select>
+                      {inventoryData.map((el) => (
+                        <option value={el.id} key={Math.random()}>
+                          {el.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
+
             <p className="text-center text-success"> {message}</p>
             <div className="modal-footer d-flex mt-3 justify-content-center">
-              <button className="btn btn-deep-orange">
+              <button className="btn btn-deep-orange" aria-disabled>
                 Add
                 <i className="fa-solid fa-cart-shopping mr-3"></i>
               </button>

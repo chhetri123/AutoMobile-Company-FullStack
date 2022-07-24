@@ -7,10 +7,10 @@ import BrandList from "../User/Brand/BrandList";
 import ModelList from "../User/Model/ModelList";
 
 import CarDetails from "../User/Car/CarDetails/CarDetails";
-const App = () => {
+const App = (props) => {
   return (
     <div className="App">
-      <UserNavBar />
+      <UserNavBar handleUser={props.handleUser} />
       <Routes>
         <Route path="/" exact element={<Content />} />
         <Route path="/brand" exact element={<BrandList />} />

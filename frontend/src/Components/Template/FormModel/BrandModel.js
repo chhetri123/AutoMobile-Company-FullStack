@@ -14,7 +14,7 @@ const BrandModel = () => {
         name,
         url,
       });
-      console.log(res);
+  
       // let resJson = await res.json();
       if (res.status === 200) {
         setName("");
@@ -27,7 +27,6 @@ const BrandModel = () => {
         setMessage(res.msg);
       }
     } catch (err) {
-      console.log(err);
       setMessage(err.message);
     }
   };
