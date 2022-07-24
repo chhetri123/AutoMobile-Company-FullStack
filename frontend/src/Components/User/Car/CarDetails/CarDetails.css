@@ -11,3 +11,7 @@ body {
     color: orangered;
 
 }
+
+.price_tag {
+    transform: translate(11px, 45px);
+}

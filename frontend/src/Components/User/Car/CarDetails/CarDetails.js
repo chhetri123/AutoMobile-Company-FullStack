@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
 import Header from "../../../Template/Header";
 import LeftDetails from "./LeftDetails";
 import RightDetails from "./RightDetails";
 import Model from "../../../Template/FormModel/InfoModel";
 import axios from "axios";
+import ".//CarDetails.css";
 const CarDetails = () => {
   const { id, id1, id2 } = useParams();
   const [carDetails, setCarDetails] = useState({});
@@ -26,7 +26,7 @@ const CarDetails = () => {
     <div className="container" style={{ width: "75%", color: "orangered" }}>
       <div className="container-sm">
         <hr />
-        <Header headerName="Car Info" />
+        <Header headerName="Car Information" />
         <hr />
         <div className="row">
           {showMessage.msg ? (
@@ -38,8 +38,10 @@ const CarDetails = () => {
               </div>
               <div className="col-md-7">
                 <RightDetails data={carDetails} />
-                <h3>
-                  Price : RS {(+carDetails.price).toLocaleString() || "200000"}
+                <h3 className="price_tag">
+                  {carDetails.price
+                    ? ` Price : RS.${(+carDetails.price).toLocaleString()}`
+                    : "Loading..."}
                 </h3>
               </div>
             </>
