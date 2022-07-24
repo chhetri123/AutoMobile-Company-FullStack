@@ -54,14 +54,12 @@ class CarModel extends MySql {
     req.file.filename = `${
       req.file.originalname.split(".")[0] + date.getTime()
     }.png`;
-    const { VIN, name, modelId } = data.car;
+    const { VIN, name, modelId, price } = data.car;
     const { power, torque, fuelType, speed } = data.engine;
     const { frontSus, rearSus, frontBrake, rearBrake } = data.specs;
     const { color } = data.option;
     const { inventoryId } = data.inventory;
     try {
-      await promise("SET autocommit = OFF", "");
-      await promise("START TRANSACTION", "");
       const engine = await this.insert("engine", {
         power,
         torque,
@@ -86,12 +84,11 @@ class CarModel extends MySql {
         name,
         url: req.file.filename,
         model_id: modelId,
+        price,
         option_id: option.insertId,
         inventory_id: inventoryId,
       });
-      await promise("COMMIT", "");
     } catch (error) {
-      await promise("ROLLBACK", "");
       throw new Error(error);
     }
   }

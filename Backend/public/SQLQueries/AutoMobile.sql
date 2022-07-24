@@ -92,6 +92,12 @@ CREATE TABLE `inventory` (
   `address` varchar(20) not null
 );
 
+CREATE 	TABLE `admin` (
+`id` INT PRIMARY KEY auto_increment,
+`email` varchar(30) unique,
+`created_at` timestamp default current_timestamp
+);
+
 ALTER TABLE `customer` ADD FOREIGN KEY (`dealer_id`) REFERENCES `dealer` (`id`) on delete set  null;
 ALTER TABLE `sales` ADD FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) on delete cascade;
 ALTER TABLE `sales` ADD FOREIGN KEY (`dealer_id`) REFERENCES `dealer` (`id`) on delete cascade;
@@ -217,7 +223,9 @@ insert into car (id, VIN, name, url, price, customer_id, model_id, option_id, in
 (6, 'WAUAF98E17A074459', '2000 A2 (Typ 8Z)', 'Audi-A2-Typ-8Z_1.png', 8909999.00, NULL, 2, 1, 1
 );
 
-
+-- admin
+insert into admin(email) values ("admin@gmail.com");
+select * from admin;
 
 -- Some Queries
 
@@ -258,14 +266,10 @@ DROP INDEX `dealer_id` ;
 
 show columns from model;
 drop table model;
-
+select * from car;
 create trigger `brand_date_created` before insert
     on `brand`
     for each row 
     set new.`date_created` = now();
         
 
-ALTER TABLE `model` 
-CHANGE COLUMN `name` `name` VARCHAR(20) NULL ,
-ADD UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE;
-;

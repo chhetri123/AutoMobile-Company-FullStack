@@ -1,7 +1,7 @@
 const multer = require("multer");
 const sharp = require("sharp");
 
-const CarModel = require("../model/CarModel");
+const CarModel = require("../model/carModel");
 const catchAsync = require("../Utills/catchAsync");
 
 exports.getAllCars = async (req, res) => {
@@ -75,6 +75,7 @@ exports.resizeCarPhoto = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: 200, msg: "Data inserted Successfully" });
 });
 exports.postCar = catchAsync(async (req, res, next) => {
+  const time = Date.now();
   const data = JSON.parse(req.body.data);
   await CarModel.postCarInfo(data, req);
   next();

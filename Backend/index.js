@@ -7,7 +7,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 let cors = require("cors");
 
-// const carRoutes = require("./routes/carRoutes");
+//
 const customerRoutes = require("./routes/customerRoutes");
 const carRoutes = require("./routes/carRoutes");
 const brandRoutes = require("./routes/brandRoutes");
@@ -37,7 +37,7 @@ app.use("*", (req, res) => {
   res.status(404).json({ status: 404, msg: "Page not found" });
 });
 app.use((err, req, res, next) => {
-  if (process.env.NODE_ENV == "development") {
+  if (process.env.NODE_ENV === "development") {
     console.log(err);
   }
   res.status(500).json({ status: 500, msg: err.message });

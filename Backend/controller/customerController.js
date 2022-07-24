@@ -1,5 +1,6 @@
 const SalesModel = require("../model/saleModel");
 const CustomerModel = require("../model/customerModel");
+const catchAsync = require("../Utills/catchAsync");
 exports.getAllCustomers = async (req, res) => {
   const customers = await CustomerModel.getAllData("customer");
   res.status(200).json({
@@ -7,7 +8,15 @@ exports.getAllCustomers = async (req, res) => {
     data: customers,
   });
 };
-
+exports.isAdmin = catchAsync(async (req, res) => {
+  if (!req.body.email) throw new Error("Email is required");
+  const admin = await CustomerModel.find("admin", { email: req.body.email });
+  if (admin.length > 0) {
+    res.status(200).json({ status: 200, msg: "Admin logged in successfully" });
+  } else {
+    res.status(404).json({ status: 404, msg: "Admin not found" });
+  }
+});
 exports.postCustomers = async (req, res) => {
   try {
     const { name, address, email, phone, gender, income, dealer_id, carID } =
