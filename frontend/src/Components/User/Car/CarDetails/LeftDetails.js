@@ -10,7 +10,7 @@ const LeftDetails = (props) => {
         <>
           <div className="media">
             <img
-              src={`${process.env.REACT_APP_ROOT_FILE_SERVER}/${props.data.url}`}
+              src={`${process.env.REACT_APP_ROOT_FILE_SERVER}/cars/${props.data.url}`}
               alt={props.data.name}
               style={{
                 width: "100%",

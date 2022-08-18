@@ -84,3 +84,7 @@ footer p {
     border-bottom: 1px solid rgba(63, 63, 3, 0.479);
     transition: all 0.4s;
 }
+
+input[type="file"] {
+    padding: 17px 12px;
+}

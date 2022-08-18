@@ -4,21 +4,25 @@ import "./infoModel.css";
 
 const BrandModel = () => {
   const [name, setName] = useState("");
-  const [url, seturl] = useState("");
+  const [url, SetUrl] = useState("");
   const [message, setMessage] = useState("");
 
   const submitForm = async (e) => {
     e.preventDefault();
+    const data = JSON.stringify({ name, url });
+    const formData = new FormData();
+    formData.append("file", url);
+    formData.append("data", data);
     try {
-      let res = await axios.post(`${process.env.REACT_APP_ROOT_API}/brand`, {
-        name,
-        url,
-      });
-  
+      let res = await axios.post(
+        `${process.env.REACT_APP_ROOT_API}/brand`,
+        formData
+      );
+      console.log(res);
       // let resJson = await res.json();
       if (res.status === 200) {
         setName("");
-        seturl("");
+        SetUrl("");
         setTimeout(() => {
           setMessage("Brand Added Successfully");
           window.location.reload();
@@ -86,14 +90,13 @@ const BrandModel = () => {
                   >
                     url
                   </label>
+
                   <input
-                    type="text"
-                    min={0}
+                    type="file"
                     id={`orangeForm-url`}
+                    onChange={(e) => SetUrl(e.target.files[0])}
+                    accept="image/*"
                     className="form-control validate w-70"
-                    value={url}
-                    required
-                    onChange={(e) => seturl(e.target.value)}
                   />
                 </div>
               </div>

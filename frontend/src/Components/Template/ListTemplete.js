@@ -26,6 +26,7 @@ const ListTemplate = (props) => {
                     data={item}
                     model={props.model}
                     isTrue={props.isTrue}
+                    fromBrand={props.fromBrand}
                     isCarFromModel={props.isCarFromModel}
                     key={item.name + item.id}
                     link={

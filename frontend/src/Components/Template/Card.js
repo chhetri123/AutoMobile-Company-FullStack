@@ -14,7 +14,13 @@ const Card = (props) => {
           style={{ width: "20%" }}
         >
           <Link to={props.link}>
-            <img className="card-img-top p-1" src={props.data.url} alt="" />
+            <img
+              className="card-img-top p-1"
+              src={`${process.env.REACT_APP_ROOT_FILE_SERVER}/${
+                props.fromBrand ? "brands" : "models"
+              }/${props.data.url}`}
+              alt=""
+            />
             <div
               className="card-body"
               style={{ color: "black", fontWeight: "600" }}
@@ -32,7 +38,7 @@ const Card = (props) => {
             >
               <div className="imgBox">
                 <img
-                  src={`${process.env.REACT_APP_ROOT_FILE_SERVER}/${props.data.url}`}
+                  src={`${process.env.REACT_APP_ROOT_FILE_SERVER}/cars/${props.data.url}`}
                   alt=""
                 />
               </div>
@@ -40,7 +46,7 @@ const Card = (props) => {
                 <h3>{props.model}</h3>
                 <h3>{props.data.name}</h3>
                 <h2 className="price">
-                  RS {props.data.price.toLocaleString()}
+                  RS {(+props.data.price).toLocaleString()}
                 </h2>
                 <Link
                   to={

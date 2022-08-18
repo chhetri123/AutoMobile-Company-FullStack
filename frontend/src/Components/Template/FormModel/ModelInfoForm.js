@@ -1,9 +1,10 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./infoModel.css";
 
 const ModelFormInfo = (props) => {
   const [name, setName] = useState("");
-  const [url, setUrl] = useState("");
+  const [url, SetUrl] = useState("");
   const [year, setYear] = useState("");
   const [brand_id, setBrandID] = useState("");
   const [bodyStyle, setBodyStyle] = useState("");
@@ -23,25 +24,23 @@ const ModelFormInfo = (props) => {
     e.preventDefault();
     const data = JSON.stringify({
       name,
-      url,
       brand_id,
       year,
       bodyStyle,
     });
+    const formData = new FormData();
+    formData.append("file", url);
+    formData.append("data", data);
     try {
-      let res = await fetch(`${process.env.REACT_APP_ROOT_API}/model`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: data,
-      });
+      let res = await axios.post(
+        `${process.env.REACT_APP_ROOT_API}/model`,
+        formData
+      );
       // console.log(name, url, email, year, gender, income, dealer);
 
-      let resJson = await res.json();
-      if (resJson.status === 200) {
+      if (res.status === 200) {
         setName("");
-        setUrl("");
+        SetUrl("");
         setYear("");
 
         setMessage("Thanks for Buying 😊");
@@ -50,7 +49,7 @@ const ModelFormInfo = (props) => {
           window.location.reload();
         }, 1500);
       } else {
-        setMessage(resJson.msg);
+        setMessage(res.msg);
       }
     } catch (err) {
       setMessage(err.message);
@@ -110,12 +109,11 @@ const ModelFormInfo = (props) => {
                     Model Image/ Url
                   </label>
                   <input
-                    type="text"
-                    min={0}
-                    id={`orangeForm-Address`}
+                    type="file"
+                    id={`orangeForm-url`}
+                    onChange={(e) => SetUrl(e.target.files[0])}
+                    accept="image/*"
                     className="form-control validate w-70"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
                   />
                 </div>
                 <div className="md-form m-1">

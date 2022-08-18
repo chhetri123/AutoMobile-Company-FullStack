@@ -24,6 +24,7 @@ const ModelList = (props) => {
     <ModelCard
       data={models}
       isTrue={true}
+      formBrand={false}
       title={!props.title ? `Models of Brand ${brand}` : props.title}
     />
   );
