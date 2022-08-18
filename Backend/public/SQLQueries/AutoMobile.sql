@@ -1,7 +1,6 @@
 
-use sql6508240;
-drop database AutoMobile_Comapany;
-GRANT TRIGGER ON sql6508240.* TO sql6508240@sql6.freesqldatabase.com;
+use AutoMobile_Company;
+drop database automobile_comapany;
 show tables;
 CREATE TABLE `customer` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
@@ -119,14 +118,14 @@ insert  into dealer(name,address,phone) values
 
 -- brand
 insert into brand(`name`,`url`) values 
-( "Audi","https://www.izmostock.com/wp-content/uploads/2015/12/audi.gif"),
-("BMW","https://www.izmostock.com/wp-content/uploads/2015/12/bmw.png"),
-("Tesla","https://www.izmostock.com/wp-content/uploads/2015/12/tesla.jpg"),
-("Lamborghini","https://www.izmostock.com/wp-content/uploads/2015/12/lamborghini.jpg"),
-("Honda","https://www.izmostock.com/wp-content/uploads/2015/12/honda.gif"),
-("Suzuki","https://www.izmostock.com/wp-content/uploads/2015/12/suzuki.gif"),
-("Toyota","https://www.izmostock.com/wp-content/uploads/2015/12/toyota.gif"),
-('Abarth', 'https://www.izmostock.com/wp-content/uploads/2015/12/abarth.jpg');
+( "Audi","audi.gif"),
+("BMW","bmw.png"),
+("Tesla","tesla.jpg"),
+("Lamborghini","lamborghini.jpg"),
+("Honda","honda.gif"),
+("Suzuki","suzuki.gif"),
+("Toyota","toyota.gif"),
+('Abarth', 'abarth.jpg');
 
 
 -- Model
@@ -190,6 +189,7 @@ insert into inventory(id, name, address) values
 (4, 'Tesla Showroom kathmandu', 'Kathmandu Bagbazar'),
 (5, "Brother's Abarth Showroom", 'Hetauda');
 
+
 -- Dealer
 
 insert into dealer(id, name, address, phone, inventory_id) values
@@ -237,7 +237,7 @@ select * from model;
 select * from car ;
 select * from model where model.brand_id=1;
 select * from car where model_id=1;
-
+truncate brand;
 select * from car join model on model.id=car.model_id join options on options.id=car.option_id ;
 select * from inventory;
 select * from (options join engine on engine.id=options.engine_id) join specs on specs.id= options.specs_id where options.id=2;
@@ -268,6 +268,17 @@ create trigger `brand_date_created` before insert
 ALTER TABLE `model` 
 CHANGE COLUMN `name` `name` VARCHAR(20) NULL ,
 ADD UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE;
-;
+select inventory_id, count(inventory_id) as totalCar from car group by inventory_id;
+select * from inventory;
+select * from car;
+select * from engine;
+select * from specs;
+select * from options;
+ALTER TABLE inventory
+ADD COLUMN `totalCar` INT NULL DEFAULT 0 AFTER `address`;
+drop trigger brand_date_created;
 
-
+create trigger `no_of_car` before insert 
+    on ``
+    for each row 
+    set new.`totalCar` = (select count(inventory_id) as totalCar from car ,inventory where inventory_id=1);

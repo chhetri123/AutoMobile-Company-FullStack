@@ -48,6 +48,15 @@ class CarModel extends MySql {
       throw new Error(error);
     }
   }
+  async getTotalCar(id) {
+    try {
+      const query = `select count(*) as total from car where inventory_id=${id};`;
+      const [response] = await promise(query, "");
+      return response.total;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 
   async postCarInfo(data, req) {
     const date = new Date();
@@ -87,6 +96,11 @@ class CarModel extends MySql {
         price,
         option_id: option.insertId,
         inventory_id: inventoryId,
+      });
+      const totalCar = await this.getTotalCar(inventoryId);
+      await this.updateById("inventory", {
+        id: inventoryId,
+        totalCar: totalCar,
       });
     } catch (error) {
       throw new Error(error);

@@ -16,18 +16,20 @@ exports.getAllModels = async (req, res) => {
   }
 };
 
-exports.postModel = async (req, res) => {
-  try {
-    const { name, url, year, bodyStyle, brand_id } = req.body;
-    const model = await MySql.insert("model", {
-      name,
-      url,
-      year,
-      body_style: bodyStyle,
-      brand_id,
-    });
-    res.status(200).json({ status: 200, model });
-  } catch (err) {
-    res.status(500).json({ msg: err.msg });
-  }
+exports.postModel = async (req, res, next) => {
+  req.folderName = "models";
+  const date = new Date();
+  req.file.filename = `${
+    req.file.originalname.split(".")[0] + date.getTime()
+  }.png`;
+  const { name, year, bodyStyle, brand_id } = JSON.parse(req.body.data);
+
+  await MySql.insert("model", {
+    name,
+    url: req.file.filename,
+    year,
+    body_style: bodyStyle,
+    brand_id,
+  });
+  next();
 };

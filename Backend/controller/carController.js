@@ -1,9 +1,5 @@
-const multer = require("multer");
-const sharp = require("sharp");
-
 const CarModel = require("../model/carModel");
 const catchAsync = require("../Utills/catchAsync");
-
 exports.getAllCars = async (req, res) => {
   const cars = await CarModel.getAllData("car");
   res.status(200).json({ data: cars });
@@ -54,28 +50,9 @@ exports.getCarInfo = async (req, res) => {
     res.status(500).json(err);
   }
 };
-const multerStorage = multer.memoryStorage();
 
-const multerFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith("image")) {
-    cb(null, true);
-  } else {
-    cb(new Error("Not acceptable file"), false);
-  }
-};
-const upload = multer({
-  storage: multerStorage,
-  fileFilter: multerFilter,
-});
-exports.uploadCarPhoto = upload.single("file");
-exports.resizeCarPhoto = catchAsync(async (req, res, next) => {
-  await sharp(req.file.buffer).toFile(
-    `public/images/cars/${req.file.filename}`
-  );
-  res.status(200).json({ status: 200, msg: "Data inserted Successfully" });
-});
 exports.postCar = catchAsync(async (req, res, next) => {
-  const time = Date.now();
+  req.folderName = "cars";
   const data = JSON.parse(req.body.data);
   await CarModel.postCarInfo(data, req);
   next();
